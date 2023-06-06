@@ -177,14 +177,6 @@ public class JFLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTFUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFUsuarioMousePressed
-
-    }//GEN-LAST:event_jTFUsuarioMousePressed
-
-    private void jTFUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFUsuarioActionPerformed
-
     private void jPFContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPFContraseñaMousePressed
 
     }//GEN-LAST:event_jPFContraseñaMousePressed
@@ -210,6 +202,14 @@ public class JFLogin extends javax.swing.JFrame {
     private void jBIngresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBIngresarMouseExited
         jBIngresar.setBackground(new Color(12,147,81));
     }//GEN-LAST:event_jBIngresarMouseExited
+
+    private void jTFUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFUsuarioActionPerformed
+
+    private void jTFUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFUsuarioMousePressed
+
+    }//GEN-LAST:event_jTFUsuarioMousePressed
 
     /**
      * @param args the command line arguments

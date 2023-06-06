@@ -4,12 +4,16 @@
  */
 package Views;
 
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author crist
  */
 public class JPTrabajador extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form JPRequisicion
      */
@@ -28,21 +32,21 @@ public class JPTrabajador extends javax.swing.JPanel {
 
         jPBackground = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        jTFEmpleado = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTFNomina = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextField3 = new javax.swing.JTextField();
+        jTFFecha = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        jTextField4 = new javax.swing.JTextField();
+        jTFNumeroP = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTFDia = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
-        jTextField6 = new javax.swing.JTextField();
+        jTFHoras = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
-        jTextField7 = new javax.swing.JTextField();
+        jTFPagoH = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -66,58 +70,93 @@ public class JPTrabajador extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(175, 175, 175));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTextField1.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField1.setText("Nombre del empleado");
-        jTextField1.setBorder(null);
+        jTFEmpleado.setBackground(new java.awt.Color(242, 242, 242));
+        jTFEmpleado.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFEmpleado.setText("Nombre del empleado");
+        jTFEmpleado.setBorder(null);
+        jTFEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFEmpleadoMousePressed(evt);
+            }
+        });
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel1.setText("Información");
 
-        jTextField2.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField2.setText("Nómina");
-        jTextField2.setBorder(null);
+        jTFNomina.setBackground(new java.awt.Color(242, 242, 242));
+        jTFNomina.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFNomina.setText("Nómina");
+        jTFNomina.setBorder(null);
+        jTFNomina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFNominaMousePressed(evt);
+            }
+        });
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField3.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField3.setText("Fecha Mes/Dia/Año");
-        jTextField3.setBorder(null);
+        jTFFecha.setBackground(new java.awt.Color(242, 242, 242));
+        jTFFecha.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFFecha.setText("Fecha Mes/Dia/Año");
+        jTFFecha.setBorder(null);
+        jTFFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFFechaMousePressed(evt);
+            }
+        });
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField4.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField4.setText("N° periodo");
-        jTextField4.setBorder(null);
+        jTFNumeroP.setBackground(new java.awt.Color(242, 242, 242));
+        jTFNumeroP.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFNumeroP.setText("N° periodo");
+        jTFNumeroP.setBorder(null);
+        jTFNumeroP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFNumeroPMousePressed(evt);
+            }
+        });
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel2.setText("Horario del trabajador");
 
-        jTextField5.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField5.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField5.setText("Dia");
-        jTextField5.setBorder(null);
+        jTFDia.setBackground(new java.awt.Color(242, 242, 242));
+        jTFDia.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFDia.setText("Dia");
+        jTFDia.setBorder(null);
+        jTFDia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFDiaMousePressed(evt);
+            }
+        });
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField6.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField6.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField6.setText("Total de las horas");
-        jTextField6.setBorder(null);
+        jTFHoras.setBackground(new java.awt.Color(242, 242, 242));
+        jTFHoras.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFHoras.setText("Total de las horas");
+        jTFHoras.setBorder(null);
+        jTFHoras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFHorasMousePressed(evt);
+            }
+        });
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField7.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField7.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField7.setText("Pago por hora");
-        jTextField7.setBorder(null);
+        jTFPagoH.setBackground(new java.awt.Color(242, 242, 242));
+        jTFPagoH.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFPagoH.setText("Pago por hora");
+        jTFPagoH.setBorder(null);
+        jTFPagoH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFPagoHMousePressed(evt);
+            }
+        });
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -134,16 +173,12 @@ public class JPTrabajador extends javax.swing.JPanel {
         jLabel6.setText("Numero de periodo:");
 
         jLNEmpleado.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNEmpleado.setText("Información");
 
         jLNomina.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNomina.setText("Información");
 
         jLFecha.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLFecha.setText("Información");
 
         jLNumeroP.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNumeroP.setText("Información");
 
         jSeparator9.setForeground(new java.awt.Color(51, 51, 51));
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -154,6 +189,19 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBEliminar.setText("ELIMINAR");
         jBEliminar.setBorderPainted(false);
         jBEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBEliminarMouseExited(evt);
+            }
+        });
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -174,7 +222,7 @@ public class JPTrabajador extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLNEmpleado)
                             .addComponent(jLNumeroP))
-                        .addGap(0, 237, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLNomina)
@@ -228,7 +276,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,6 +289,19 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBAgregarInfo.setText("+");
         jBAgregarInfo.setBorderPainted(false);
         jBAgregarInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAgregarInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBAgregarInfoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBAgregarInfoMouseExited(evt);
+            }
+        });
+        jBAgregarInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarInfoActionPerformed(evt);
+            }
+        });
 
         jBAgregarMateriales.setBackground(new java.awt.Color(12, 147, 81));
         jBAgregarMateriales.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -248,6 +309,19 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBAgregarMateriales.setText("+");
         jBAgregarMateriales.setBorderPainted(false);
         jBAgregarMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAgregarMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBAgregarMaterialesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBAgregarMaterialesMouseExited(evt);
+            }
+        });
+        jBAgregarMateriales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarMaterialesActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel7.setText("Costo total:  $");
@@ -265,27 +339,27 @@ public class JPTrabajador extends javax.swing.JPanel {
                         .addGap(49, 49, 49)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                                .addComponent(jTFEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                                 .addComponent(jSeparator2))
                             .addComponent(jLabel1)
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField2)
+                                .addComponent(jTFNomina)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField3)
+                                .addComponent(jTFFecha)
                                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField4)
+                                .addComponent(jTFNumeroP)
                                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2)
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField5)
+                                .addComponent(jTFDia)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField6)
+                                .addComponent(jTFHoras)
                                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField7)
+                                .addComponent(jTFPagoH)
                                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(93, 93, 93))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
@@ -295,15 +369,14 @@ public class JPTrabajador extends javax.swing.JPanel {
                         .addGap(18, 18, 18)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLCostoT)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                        .addComponent(jLCostoT))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPBackgroundLayout.setVerticalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,33 +400,33 @@ public class JPTrabajador extends javax.swing.JPanel {
                                 .addGap(39, 39, 39)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFDia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFPagoH, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -376,6 +449,202 @@ public class JPTrabajador extends javax.swing.JPanel {
             .addComponent(jPBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBAgregarInfoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBAgregarInfoMouseEntered
+        jBAgregarInfo.setBackground(new Color(5,102,55));
+    }//GEN-LAST:event_jBAgregarInfoMouseEntered
+
+    private void jBAgregarInfoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBAgregarInfoMouseExited
+        jBAgregarInfo.setBackground(new Color(12,147,81));
+    }//GEN-LAST:event_jBAgregarInfoMouseExited
+
+    private void jBAgregarMaterialesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesMouseEntered
+        jBAgregarMateriales.setBackground(new Color(5,102,55));
+    }//GEN-LAST:event_jBAgregarMaterialesMouseEntered
+
+    private void jBAgregarMaterialesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesMouseExited
+        jBAgregarMateriales.setBackground(new Color(12,147,81));
+    }//GEN-LAST:event_jBAgregarMaterialesMouseExited
+
+    private void jBEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarMouseEntered
+        jBEliminar.setBackground(new Color(182,45,41));
+    }//GEN-LAST:event_jBEliminarMouseEntered
+
+    private void jBEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarMouseExited
+        jBEliminar.setBackground(new Color(221,66,62));
+    }//GEN-LAST:event_jBEliminarMouseExited
+
+    private void jBAgregarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarInfoActionPerformed
+        String nombreE = jTFEmpleado.getText();
+        String nomina = jTFNomina.getText();
+        String fecha = jTFFecha.getText();
+        String numeroP = jTFNumeroP.getText();
+        
+        if (nombreE.equals("Nombre del empleado") && nomina.equals("Nómina") && fecha.equals("Fecha Mes/Dia/Año") && numeroP.equals("N° periodo")) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
+        } else if (nombreE.equals("Nombre del empleado") || nomina.equals("Nómina") || fecha.equals("Fecha Mes/Dia/Año") || numeroP.equals("N° periodo")) {
+            JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
+        } else {
+            jLNEmpleado.setText(nombreE);
+        jLNomina.setText(nomina);
+        jLFecha.setText(fecha);
+        jLNumeroP.setText(numeroP);
+        
+        jTFEmpleado.setText("Nombre del empleado");
+        jTFNomina.setText("Nómina");
+        jTFFecha.setText("Fecha Mes/Dia/Año");
+        jTFNumeroP.setText("N° periodo");
+        }
+    }//GEN-LAST:event_jBAgregarInfoActionPerformed
+
+    private void jBAgregarMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesActionPerformed
+        DefaultTableModel moHorarioT = (DefaultTableModel) jTable1.getModel();
+        String dia = jTFDia.getText();
+        int totalH = Integer.parseInt(jTFHoras.getText());
+        float pagoH = Float.parseFloat(jTFPagoH.getText());
+        float total = totalH * pagoH;
+        
+        jTFDia.setText("Dia");
+        jTFHoras.setText("Total de las horas");
+        jTFPagoH.setText("Pago por hora");
+        
+        moHorarioT.addRow(new Object[] {dia, totalH, pagoH, total});
+        jTable1.repaint(); //Actualizar tabla visualmente
+        
+        // Declarar la variable costoT fuera del ActionListener
+        float costoT = 0.00f;
+
+        // Obtener el número de filas en el JTable
+        int totalFilas = jTable1.getRowCount();
+
+        // Recorrer cada fila del JTable
+        for (int i = 0; i < totalFilas; i++) {
+            // Obtener el valor total de la columna 3 (índice 2) en cada fila
+            float valorTotal = Float.parseFloat(jTable1.getValueAt(i, 3).toString());
+            // Acumular el valor total en la variable costoT
+            costoT += valorTotal;
+        }
+
+        // Establecer el valor acumulado en el JLabel
+        jLCostoT.setText(String.valueOf(costoT));
+    }//GEN-LAST:event_jBAgregarMaterialesActionPerformed
+
+    private void jTFEmpleadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFEmpleadoMousePressed
+        if (jTFEmpleado.getText().equals("Nombre del empleado")) {
+            jTFEmpleado.setText("");
+        }
+        if (jTFNomina.getText().isEmpty()) {
+            jTFNomina.setText("Nómina");   
+        }
+
+        if (jTFFecha.getText().isEmpty()) {
+            jTFFecha.setText("Fecha Mes/Dia/Año");  
+        }
+
+        if (jTFNumeroP.getText().isEmpty()) {
+            jTFNumeroP.setText("N° periodo");  
+        }
+    }//GEN-LAST:event_jTFEmpleadoMousePressed
+
+    private void jTFNominaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNominaMousePressed
+        if (jTFEmpleado.getText().isEmpty()) {
+            jTFEmpleado.setText("Nombre del empleado");
+        }
+
+        if (jTFNomina.getText().equals("Nómina")) {
+            jTFNomina.setText("");
+        }
+        
+        if (jTFFecha.getText().isEmpty()) {
+            jTFFecha.setText("Fecha Mes/Dia/Año");
+        }
+
+        if (jTFNumeroP.getText().isEmpty()) {
+            jTFNumeroP.setText("N° periodo");
+        }
+    }//GEN-LAST:event_jTFNominaMousePressed
+
+    private void jTFFechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFFechaMousePressed
+        if (jTFEmpleado.getText().isEmpty()) {
+            jTFEmpleado.setText("Nombre del empleado");
+        }
+
+        if (jTFNomina.getText().isEmpty()) {
+            jTFNomina.setText("Nómina");
+        }
+
+        if (jTFFecha.getText().equals("Fecha Mes/Dia/Año")) {
+            jTFFecha.setText("");
+        }
+
+        if (jTFNumeroP.getText().isEmpty()) {
+            jTFNumeroP.setText("N° periodo");
+        }
+    }//GEN-LAST:event_jTFFechaMousePressed
+
+    private void jTFNumeroPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNumeroPMousePressed
+        if (jTFEmpleado.getText().isEmpty()) {
+            jTFEmpleado.setText("Nombre del empleado");
+        }
+
+        if (jTFNomina.getText().isEmpty()) {
+            jTFNomina.setText("Nómina");
+        }
+
+        if (jTFFecha.getText().isEmpty()) {
+            jTFFecha.setText("Fecha Mes/Dia/Año");
+        }
+
+        if (jTFNumeroP.getText().equals("N° periodo")) {
+            jTFNumeroP.setText("");
+        }
+    }//GEN-LAST:event_jTFNumeroPMousePressed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        jLNEmpleado.setText("");
+        jLNomina.setText("");
+        jLFecha.setText("");
+        jLNumeroP.setText("");
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jTFDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDiaMousePressed
+        if (jTFDia.getText().equals("Dia")) {
+            jTFDia.setText("");
+        }
+        if (jTFHoras.getText().isEmpty()) {
+            jTFHoras.setText("Total de las horas");   
+        }
+
+        if (jTFPagoH.getText().isEmpty()) {
+            jTFPagoH.setText("Pago por hora");  
+        }
+    }//GEN-LAST:event_jTFDiaMousePressed
+
+    private void jTFHorasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFHorasMousePressed
+        if (jTFDia.getText().isEmpty()) {
+            jTFDia.setText("Dia");
+        }
+        if (jTFHoras.getText().equals("Total de las horas")) {
+            jTFHoras.setText("");   
+        }
+
+        if (jTFPagoH.getText().isEmpty()) {
+            jTFPagoH.setText("Pago por hora");  
+        }
+    }//GEN-LAST:event_jTFHorasMousePressed
+
+    private void jTFPagoHMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFPagoHMousePressed
+        if (jTFDia.getText().isEmpty()) {
+            jTFDia.setText("Dia");
+        }
+        if (jTFHoras.getText().isEmpty()) {
+            jTFHoras.setText("Total de las horas");   
+        }
+
+        if (jTFPagoH.getText().equals("Pago por hora")) {
+            jTFPagoH.setText("");  
+        }
+    }//GEN-LAST:event_jTFPagoHMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -407,13 +676,13 @@ public class JPTrabajador extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTextField jTFDia;
+    private javax.swing.JTextField jTFEmpleado;
+    private javax.swing.JTextField jTFFecha;
+    private javax.swing.JTextField jTFHoras;
+    private javax.swing.JTextField jTFNomina;
+    private javax.swing.JTextField jTFNumeroP;
+    private javax.swing.JTextField jTFPagoH;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
