@@ -5,6 +5,7 @@
 package Views;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -499,11 +500,13 @@ public class JPTrabajador extends javax.swing.JPanel {
 
     private void jBAgregarMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesActionPerformed
         DefaultTableModel moHorarioT = (DefaultTableModel) jTTrabajadorT.getModel();
+        DecimalFormat df = new DecimalFormat("0.00");
         String dia = jTFDia.getText();
         String totalHS = jTFHoras.getText();
         String pagoHS = jTFPagoH.getText();
         int totalH;
         float pagoH, total;
+        String costoTFormateado;
 
         if (dia.equals("Dia") && totalHS.equals("Total de las horas") && pagoHS.equals("Pago por hora")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
@@ -535,9 +538,10 @@ public class JPTrabajador extends javax.swing.JPanel {
                 // Acumular el valor total en la variable costoT
                 costoT += valorTotal;
             }
+            costoTFormateado = df.format(costoT);
 
             // Establecer el valor acumulado en el JLabel
-            jLCostoT.setText(String.valueOf(costoT));
+            jLCostoT.setText(costoTFormateado);
         }
     }//GEN-LAST:event_jBAgregarMaterialesActionPerformed
 

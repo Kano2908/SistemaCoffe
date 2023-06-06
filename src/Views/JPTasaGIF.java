@@ -4,6 +4,10 @@
  */
 package Views;
 
+import java.awt.Color;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author crist
@@ -27,57 +31,97 @@ public class JPTasaGIF extends javax.swing.JPanel {
     private void initComponents() {
 
         jPBackground = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextField2 = new javax.swing.JTextField();
+        jTFHorasMOD = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jBAgregarInfo = new javax.swing.JButton();
+        jBCalcular = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLCostoT = new javax.swing.JLabel();
         jBEliminar = new javax.swing.JButton();
         jLFondo = new javax.swing.JLabel();
+        jTFPresupuesto = new javax.swing.JTextField();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jTextField1.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField1.setText("Presupuesto");
-        jTextField1.setBorder(null);
+        jPBackground.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Calculo para tasa GIF");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField2.setBackground(new java.awt.Color(242, 242, 242));
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField2.setText("Hotas de mano de obra");
-        jTextField2.setBorder(null);
+        jTFHorasMOD.setBackground(new java.awt.Color(242, 242, 242));
+        jTFHorasMOD.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFHorasMOD.setText("Horas de mano de obra");
+        jTFHorasMOD.setBorder(null);
+        jTFHorasMOD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFHorasMODMousePressed(evt);
+            }
+        });
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jBAgregarInfo.setBackground(new java.awt.Color(12, 147, 81));
-        jBAgregarInfo.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jBAgregarInfo.setForeground(new java.awt.Color(255, 255, 255));
-        jBAgregarInfo.setText("CALCULAR");
-        jBAgregarInfo.setBorderPainted(false);
+        jBCalcular.setBackground(new java.awt.Color(12, 147, 81));
+        jBCalcular.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jBCalcular.setForeground(new java.awt.Color(255, 255, 255));
+        jBCalcular.setText("CALCULAR");
+        jBCalcular.setBorderPainted(false);
+        jBCalcular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBCalcularMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBCalcularMouseExited(evt);
+            }
+        });
+        jBCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCalcularActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel7.setText("Costo total:  $");
 
         jLCostoT.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLCostoT.setText("Información");
 
         jBEliminar.setBackground(new java.awt.Color(221, 66, 62));
         jBEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jBEliminar.setForeground(new java.awt.Color(255, 255, 255));
         jBEliminar.setText("ELIMINAR");
         jBEliminar.setBorderPainted(false);
+        jBEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBEliminarMouseExited(evt);
+            }
+        });
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jLFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/fondotazagif.png"))); // NOI18N
+
+        jTFPresupuesto.setBackground(new java.awt.Color(242, 242, 242));
+        jTFPresupuesto.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFPresupuesto.setText("Presupuesto");
+        jTFPresupuesto.setBorder(null);
+        jTFPresupuesto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFPresupuestoMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
         jPBackground.setLayout(jPBackgroundLayout);
@@ -91,7 +135,7 @@ public class JPTasaGIF extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
-                                .addComponent(jBAgregarInfo)
+                                .addComponent(jBCalcular)
                                 .addGap(262, 262, 262))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
                                 .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -99,11 +143,11 @@ public class JPTasaGIF extends javax.swing.JPanel {
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLCostoT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jTextField1)
                                     .addComponent(jSeparator2)
-                                    .addComponent(jTextField2)
+                                    .addComponent(jTFHorasMOD)
                                     .addComponent(jSeparator3)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFPresupuesto))
                                 .addGap(173, 173, 173))))
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addGap(202, 202, 202)
@@ -118,16 +162,16 @@ public class JPTasaGIF extends javax.swing.JPanel {
                     .addComponent(jLFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jTFPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFHorasMOD, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(51, 51, 51)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -150,9 +194,64 @@ public class JPTasaGIF extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTFPresupuestoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFPresupuestoMousePressed
+        if(jTFPresupuesto.getText().equals("Presupuesto")){
+            jTFPresupuesto.setText("");
+        }
+        if(jTFHorasMOD.getText().isEmpty()){
+            jTFHorasMOD.setText("Horas de mano de obra");
+        }
+    }//GEN-LAST:event_jTFPresupuestoMousePressed
+
+    private void jTFHorasMODMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFHorasMODMousePressed
+        if(jTFPresupuesto.getText().isEmpty()){
+            jTFPresupuesto.setText("Presupuesto");
+        }
+        if(jTFHorasMOD.getText().equals("Horas de mano de obra")){
+            jTFHorasMOD.setText("");
+        }
+    }//GEN-LAST:event_jTFHorasMODMousePressed
+
+    private void jBCalcularMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBCalcularMouseEntered
+        jBCalcular.setBackground(new Color(5,102,55));
+    }//GEN-LAST:event_jBCalcularMouseEntered
+
+    private void jBCalcularMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBCalcularMouseExited
+        jBCalcular.setBackground(new Color(12,147,81));
+    }//GEN-LAST:event_jBCalcularMouseExited
+
+    private void jBEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarMouseEntered
+        jBEliminar.setBackground(new Color(182,45,41));
+    }//GEN-LAST:event_jBEliminarMouseEntered
+
+    private void jBEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarMouseExited
+        jBEliminar.setBackground(new Color(221,66,62));
+    }//GEN-LAST:event_jBEliminarMouseExited
+
+    private void jBCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCalcularActionPerformed
+        float presupuesto = Float.parseFloat(jTFPresupuesto.getText());
+        float horasMOD = Float.parseFloat(jTFHorasMOD.getText());
+        float tazaGIF;
+
+        tazaGIF = (presupuesto / horasMOD);
+
+        DecimalFormat df = new DecimalFormat("0.00");
+        String tazaGIFFormateada = df.format(tazaGIF);
+        
+        jTFPresupuesto.setText("Presupuesto");
+        jTFHorasMOD.setText("Horas de mano de obra");
+        
+        JOptionPane.showMessageDialog(null, "Calculo completo");
+        jLCostoT.setText(tazaGIFFormateada);
+    }//GEN-LAST:event_jBCalcularActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        jLCostoT.setText("");
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAgregarInfo;
+    private javax.swing.JButton jBCalcular;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JLabel jLCostoT;
     private javax.swing.JLabel jLFondo;
@@ -161,7 +260,7 @@ public class JPTasaGIF extends javax.swing.JPanel {
     private javax.swing.JPanel jPBackground;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTFHorasMOD;
+    private javax.swing.JTextField jTFPresupuesto;
     // End of variables declaration//GEN-END:variables
 }

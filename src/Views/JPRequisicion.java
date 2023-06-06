@@ -5,6 +5,7 @@
 package Views;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -613,11 +614,13 @@ public class JPRequisicion extends javax.swing.JPanel {
 
     private void jBAgregarMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesActionPerformed
         DefaultTableModel moRequisicionM = (DefaultTableModel) jTRequisicionM.getModel();
+        DecimalFormat df = new DecimalFormat("0.00");
         String cantidadS = String.valueOf(jTFCantidad.getText());
         String descripcion = jTFDescripcion.getText();
         String precioUS = String.valueOf(jTFPrecioU.getText());
         int cantidad;
         float precioU, total;
+        String costoTFormateado;
         //Que sean string para que pasen por las dos condiciones ya una vez pasadas se transforman en int y float en una nueva variable
 
         if (cantidadS.equals("Cantidad") && descripcion.equals("Descripcion") && precioUS.equals("Precio Unitario")) {
@@ -647,12 +650,14 @@ public class JPRequisicion extends javax.swing.JPanel {
             for (int i = 0; i < totalFilas; i++) {
                 // Obtener el valor total de la columna 3 (índice 2) en cada fila
                 float valorTotal = Float.parseFloat(jTRequisicionM.getValueAt(i, 3).toString());
+                
                 // Acumular el valor total en la variable costoT
                 costoT += valorTotal;
             }
+            costoTFormateado = df.format(costoT);
 
             // Establecer el valor acumulado en el JLabel
-            jLCostoT.setText(String.valueOf(costoT));
+            jLCostoT.setText(costoTFormateado);
         }
     }//GEN-LAST:event_jBAgregarMaterialesActionPerformed
 
