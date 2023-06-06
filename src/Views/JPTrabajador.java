@@ -61,7 +61,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTTrabajadorT = new javax.swing.JTable();
         jBAgregarInfo = new javax.swing.JButton();
         jBAgregarMateriales = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -262,7 +262,7 @@ public class JPTrabajador extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTTrabajadorT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -270,7 +270,7 @@ public class JPTrabajador extends javax.swing.JPanel {
                 "Dia", "Horas", "Pago", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTTrabajadorT);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -327,7 +327,6 @@ public class JPTrabajador extends javax.swing.JPanel {
         jLabel7.setText("Costo total:  $");
 
         jLCostoT.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLCostoT.setText("Información");
 
         javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
         jPBackground.setLayout(jPBackgroundLayout);
@@ -485,48 +484,61 @@ public class JPTrabajador extends javax.swing.JPanel {
         } else if (nombreE.equals("Nombre del empleado") || nomina.equals("Nómina") || fecha.equals("Fecha Mes/Dia/Año") || numeroP.equals("N° periodo")) {
             JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
         } else {
+            JOptionPane.showMessageDialog(null, "Datos ingresados");
             jLNEmpleado.setText(nombreE);
-        jLNomina.setText(nomina);
-        jLFecha.setText(fecha);
-        jLNumeroP.setText(numeroP);
-        
-        jTFEmpleado.setText("Nombre del empleado");
-        jTFNomina.setText("Nómina");
-        jTFFecha.setText("Fecha Mes/Dia/Año");
-        jTFNumeroP.setText("N° periodo");
+            jLNomina.setText(nomina);
+            jLFecha.setText(fecha);
+            jLNumeroP.setText(numeroP);
+
+            jTFEmpleado.setText("Nombre del empleado");
+            jTFNomina.setText("Nómina");
+            jTFFecha.setText("Fecha Mes/Dia/Año");
+            jTFNumeroP.setText("N° periodo");
         }
     }//GEN-LAST:event_jBAgregarInfoActionPerformed
 
     private void jBAgregarMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesActionPerformed
-        DefaultTableModel moHorarioT = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel moHorarioT = (DefaultTableModel) jTTrabajadorT.getModel();
         String dia = jTFDia.getText();
-        int totalH = Integer.parseInt(jTFHoras.getText());
-        float pagoH = Float.parseFloat(jTFPagoH.getText());
-        float total = totalH * pagoH;
-        
-        jTFDia.setText("Dia");
-        jTFHoras.setText("Total de las horas");
-        jTFPagoH.setText("Pago por hora");
-        
-        moHorarioT.addRow(new Object[] {dia, totalH, pagoH, total});
-        jTable1.repaint(); //Actualizar tabla visualmente
-        
-        // Declarar la variable costoT fuera del ActionListener
-        float costoT = 0.00f;
+        String totalHS = jTFHoras.getText();
+        String pagoHS = jTFPagoH.getText();
+        int totalH;
+        float pagoH, total;
 
-        // Obtener el número de filas en el JTable
-        int totalFilas = jTable1.getRowCount();
+        if (dia.equals("Dia") && totalHS.equals("Total de las horas") && pagoHS.equals("Pago por hora")) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
+        } else if (dia.equals("Dia") || totalHS.equals("Total de las horas") || pagoHS.equals("Pago por hora")) {
+            JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
+        } else {
+            totalH = Integer.parseInt(jTFHoras.getText());
+            pagoH = Float.parseFloat(jTFPagoH.getText());
+            total = totalH * pagoH;
+            
+            jTFDia.setText("Dia");
+            jTFHoras.setText("Total de las horas");
+            jTFPagoH.setText("Pago por hora");
+            
+            JOptionPane.showMessageDialog(null, "Datos ingresados");
+            moHorarioT.addRow(new Object[]{dia, totalH, pagoH, total});
+            jTTrabajadorT.repaint(); //Actualizar tabla visualmente
 
-        // Recorrer cada fila del JTable
-        for (int i = 0; i < totalFilas; i++) {
-            // Obtener el valor total de la columna 3 (índice 2) en cada fila
-            float valorTotal = Float.parseFloat(jTable1.getValueAt(i, 3).toString());
-            // Acumular el valor total en la variable costoT
-            costoT += valorTotal;
+            // Declarar la variable costoT fuera del ActionListener
+            float costoT = 0.00f;
+
+            // Obtener el número de filas en el JTable
+            int totalFilas = jTTrabajadorT.getRowCount();
+
+            // Recorrer cada fila del JTable
+            for (int i = 0; i < totalFilas; i++) {
+                // Obtener el valor total de la columna 3 (índice 2) en cada fila
+                float valorTotal = Float.parseFloat(jTTrabajadorT.getValueAt(i, 3).toString());
+                // Acumular el valor total en la variable costoT
+                costoT += valorTotal;
+            }
+
+            // Establecer el valor acumulado en el JLabel
+            jLCostoT.setText(String.valueOf(costoT));
         }
-
-        // Establecer el valor acumulado en el JLabel
-        jLCostoT.setText(String.valueOf(costoT));
     }//GEN-LAST:event_jBAgregarMaterialesActionPerformed
 
     private void jTFEmpleadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFEmpleadoMousePressed
@@ -683,6 +695,6 @@ public class JPTrabajador extends javax.swing.JPanel {
     private javax.swing.JTextField jTFNomina;
     private javax.swing.JTextField jTFNumeroP;
     private javax.swing.JTextField jTFPagoH;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTTrabajadorT;
     // End of variables declaration//GEN-END:variables
 }
