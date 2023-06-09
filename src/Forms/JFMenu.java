@@ -10,6 +10,9 @@ import Views.JPRequisicion;
 import Views.JPTasaGIF;
 import Views.JPTrabajador;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,7 +48,6 @@ public class JFMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPBackground = new javax.swing.JPanel();
         jPMenu = new javax.swing.JPanel();
         jBRequisicionM = new javax.swing.JButton();
         jBTiempoT = new javax.swing.JButton();
@@ -59,18 +61,7 @@ public class JFMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
-        jPBackground.setLayout(jPBackgroundLayout);
-        jPBackgroundLayout.setHorizontalGroup(
-            jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1078, Short.MAX_VALUE)
-        );
-        jPBackgroundLayout.setVerticalGroup(
-            jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
+        jPMenu.setBackground(new java.awt.Color(236, 236, 236));
 
         jBRequisicionM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/RequisicionM.png"))); // NOI18N
         jBRequisicionM.setToolTipText("Requisición de materiales");
@@ -185,15 +176,11 @@ public class JFMenu extends javax.swing.JFrame {
                 .addComponent(jPMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPViews, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPBackground, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPViews, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,14 +198,18 @@ public class JFMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jBRequisicionMActionPerformed
 
     private void jBTiempoTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTiempoTActionPerformed
-        JPTrabajador vTiempoT = new JPTrabajador();
-        vTiempoT.setSize(1012, 543);
-        vTiempoT.setLocation(0,0);
-        
-        jPViews.removeAll();
-        jPViews.add(vTiempoT, BorderLayout.CENTER);
-        jPViews.revalidate();
-        jPViews.repaint();
+        try {
+            JPTrabajador vTiempoT = new JPTrabajador();
+            vTiempoT.setSize(1012, 543);
+            vTiempoT.setLocation(0,0);
+            
+            jPViews.removeAll();
+            jPViews.add(vTiempoT, BorderLayout.CENTER);
+            jPViews.revalidate();
+            jPViews.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBTiempoTActionPerformed
 
     private void jBTasaGIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTasaGIFActionPerformed
@@ -293,7 +284,6 @@ public class JFMenu extends javax.swing.JFrame {
     private javax.swing.JButton jBTiempoT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPBackground;
     private javax.swing.JPanel jPMenu;
     private javax.swing.JPanel jPViews;
     // End of variables declaration//GEN-END:variables

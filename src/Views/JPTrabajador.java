@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views;
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,12 +16,98 @@ import javax.swing.table.DefaultTableModel;
  * @author crist
  */
 public class JPTrabajador extends javax.swing.JPanel {
-    
+    ConexionSQL connect = new ConexionSQL();
+    Connection con;
+    Statement st;
+    ResultSet rs;
+    DefaultTableModel modeloHorario;
+    String iniciarT = "BEGIN";
     /**
      * Creates new form JPRequisicion
      */
-    public JPTrabajador() {
+    public JPTrabajador() throws SQLException {
         initComponents();
+        consultaInicial();
+        consultaEmpleado();
+        consultaCostoT();
+    }
+    
+    private void limpiarjLAbelEmpleado(){
+        jLNEmpleado.setText("");
+        jLNomina.setText("");
+        jLFecha.setText("");
+        jLNumeroP.setText("");
+    }
+    
+    private void limpiarjTFieldEmpleado() {
+        jTFEmpleado.setText("Nombre del empleado");
+        jTFNomina.setText("Nómina");
+        jTFFecha.setText("Fecha Mes/Dia/Año");
+        jTFNumeroP.setText("N° periodo");
+    }
+    private void limpiarjTFieldHorario() {
+        jTFDia.setText("Dia");
+        jTFHoras.setText("Total de las horas");
+        jTFPagoH.setText("Pago por hora");
+    }
+    
+    void limpiarTabla() {
+        for (int i = 0; i < jTTrabajadorT.getRowCount(); i++) {
+            modeloHorario.removeRow(i);
+            i = i - 1;
+        }
+    }
+    
+    public void consultaInicial(){
+        try{
+            String consultaE = "SELECT dia, horasT, pagoH, (horasT * pagoH) AS total FROM horario";
+            con = connect.getConnection();
+            st = con.createStatement();
+            rs = st.executeQuery(consultaE);
+            
+            Object[] empleados = new Object[4];
+            modeloHorario = (DefaultTableModel) jTTrabajadorT.getModel();
+            while(rs.next()){
+                empleados[0] = rs.getString("dia");
+                empleados[1] = rs.getString("horasT");
+                empleados[2] = rs.getString("pagoH");
+                empleados[3] = rs.getString("total");
+                
+                modeloHorario.addRow(empleados);
+            }jTTrabajadorT.setModel(modeloHorario);
+        }catch(Exception e){
+            System.out.println("El error es: "+e);
+        }
+    }
+    
+    private void consultaEmpleado() throws SQLException {
+        String queryEmpleado = "SELECT nombre, nomina, fecha, nPeriodos FROM empleado";
+        try (ResultSet rsEmpleado = st.executeQuery(queryEmpleado)) {
+            while (rsEmpleado.next()) {
+                String nombre = rsEmpleado.getString("nombre");
+                String nomina = rsEmpleado.getString("nomina");
+                String fecha = rsEmpleado.getString("fecha");
+                String numeroP = rsEmpleado.getString("nPeriodos");
+                
+                // Asignar los valores a los JLabels correspondientes
+                jLNEmpleado.setText(nombre);
+                jLNomina.setText(nomina);
+                jLFecha.setText(fecha);
+                jLNumeroP.setText(numeroP);
+            }
+        }
+    }
+    
+    private void consultaCostoT() throws SQLException {
+        String queryTotalC = "SELECT SUM(horasT * pagoH) AS costoT FROM horario";
+        ResultSet rsTotalC = st.executeQuery(queryTotalC);
+
+        if (rsTotalC.next()) {
+            String costoTC = rsTotalC.getString("costoT");
+            jLCostoT.setText(costoTC);
+        }
+
+        rsTotalC.close();
     }
 
     /**
@@ -66,6 +155,8 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBAgregarMateriales = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLCostoT = new javax.swing.JLabel();
+        jBLimpiar = new javax.swing.JButton();
+        jBEliminarRegistro = new javax.swing.JButton();
 
         jSeparator1.setForeground(new java.awt.Color(175, 175, 175));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -220,16 +311,15 @@ public class JPTrabajador extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLNEmpleado)
-                            .addComponent(jLNumeroP))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLNEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLNomina)
-                            .addComponent(jLFecha))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBEliminar)))
-                .addContainerGap())
+                        .addComponent(jLFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addComponent(jBEliminar)
+                        .addGap(22, 22, 22))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +339,7 @@ public class JPTrabajador extends javax.swing.JPanel {
                             .addComponent(jLabel5)
                             .addComponent(jLFecha)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(27, 27, 27)
                         .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -270,13 +360,18 @@ public class JPTrabajador extends javax.swing.JPanel {
                 "Dia", "Horas", "Pago", "Total"
             }
         ));
+        jTTrabajadorT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTTrabajadorTMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTTrabajadorT);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,6 +423,46 @@ public class JPTrabajador extends javax.swing.JPanel {
 
         jLCostoT.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
 
+        jBLimpiar.setBackground(new java.awt.Color(61, 103, 221));
+        jBLimpiar.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
+        jBLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        jBLimpiar.setText("LIMPIAR");
+        jBLimpiar.setBorderPainted(false);
+        jBLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBLimpiarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBLimpiarMouseExited(evt);
+            }
+        });
+        jBLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBLimpiarActionPerformed(evt);
+            }
+        });
+
+        jBEliminarRegistro.setBackground(new java.awt.Color(221, 66, 62));
+        jBEliminarRegistro.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jBEliminarRegistro.setForeground(new java.awt.Color(255, 255, 255));
+        jBEliminarRegistro.setText("-");
+        jBEliminarRegistro.setBorderPainted(false);
+        jBEliminarRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBEliminarRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jBEliminarRegistroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jBEliminarRegistroMouseExited(evt);
+            }
+        });
+        jBEliminarRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarRegistroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
         jPBackground.setLayout(jPBackgroundLayout);
         jPBackgroundLayout.setHorizontalGroup(
@@ -337,104 +472,114 @@ public class JPTrabajador extends javax.swing.JPanel {
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                                .addComponent(jSeparator2))
-                            .addComponent(jLabel1)
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFNomina)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFFecha)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFNumeroP)
-                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2)
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFDia)
-                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFHoras)
-                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTFPagoH)
-                                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(93, 93, 93))
+                            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                                        .addComponent(jSeparator2))
+                                    .addComponent(jLabel1)
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFNomina)
+                                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFFecha)
+                                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFNumeroP)
+                                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFDia)
+                                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTFHoras)
+                                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(93, 93, 93))
+                            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFPagoH, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBEliminarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLCostoT))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLCostoT))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jBLimpiar))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPBackgroundLayout.setVerticalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLCostoT))
+                .addGap(32, 32, 32))
+            .addGroup(jPBackgroundLayout.createSequentialGroup()
                 .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTFEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
                         .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(191, 191, 191))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTFDia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTFHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFPagoH, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBEliminarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(37, 37, 37)
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel1)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTFEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTFDia, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTFHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFPagoH, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLCostoT))
-                    .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -479,65 +624,101 @@ public class JPTrabajador extends javax.swing.JPanel {
         String fecha = jTFFecha.getText();
         String numeroP = jTFNumeroP.getText();
         
+        String queryInsert = "INSERT INTO empleado (id, nombre, nomina, fecha, nPeriodos) VALUES (1, '"+nombreE+"', "+nomina+", '"+fecha+"', "+numeroP+")";
+        
         if (nombreE.equals("Nombre del empleado") && nomina.equals("Nómina") && fecha.equals("Fecha Mes/Dia/Año") && numeroP.equals("N° periodo")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
         } else if (nombreE.equals("Nombre del empleado") || nomina.equals("Nómina") || fecha.equals("Fecha Mes/Dia/Año") || numeroP.equals("N° periodo")) {
             JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
         } else {
-            JOptionPane.showMessageDialog(null, "Datos ingresados");
-            jLNEmpleado.setText(nombreE);
-            jLNomina.setText(nomina);
-            jLFecha.setText(fecha);
-            jLNumeroP.setText(numeroP);
-
-            jTFEmpleado.setText("Nombre del empleado");
-            jTFNomina.setText("Nómina");
-            jTFFecha.setText("Fecha Mes/Dia/Año");
-            jTFNumeroP.setText("N° periodo");
+            try {
+                con = connect.getConnection();
+                st = con.createStatement();
+                st.execute(iniciarT);
+                st.executeUpdate(queryInsert);
+                JOptionPane.showMessageDialog(null, "Registro agregado");
+                con.commit();
+                
+                limpiarTabla();
+                limpiarjTFieldEmpleado();
+                consultaEmpleado();
+                consultaInicial();
+                consultaCostoT();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
+                if(con != null){
+                    try {
+                        JOptionPane.showMessageDialog(null, "Deshaciendo Cambios, usuarios maximos alcanzados");
+                        con.rollback();
+                        limpiarjTFieldEmpleado();
+                        consultaEmpleado();
+                        consultaInicial();
+                        consultaCostoT();
+                    } catch (SQLException ex) {
+                        System.out.println("Error: "+ex);
+                    }
+                }
+            } finally {
+                try {
+                    if (st != null && con != null) {
+                        con.setAutoCommit(true);
+                        st.close();
+                        con.close();
+                    }   
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar "+e);
+                }
+            }
         }
     }//GEN-LAST:event_jBAgregarInfoActionPerformed
 
     private void jBAgregarMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarMaterialesActionPerformed
-        DefaultTableModel moHorarioT = (DefaultTableModel) jTTrabajadorT.getModel();
         String dia = jTFDia.getText();
         String totalHS = jTFHoras.getText();
         String pagoHS = jTFPagoH.getText();
-        int totalH;
-        float pagoH, total;
-
+        
+        String queryInsert = "INSERT INTO horario (dia, horasT, pagoH, total, idEmpleado) VALUES ('"+dia+"', "+totalHS+", "+pagoHS+", NULL, 1)";
+        
         if (dia.equals("Dia") && totalHS.equals("Total de las horas") && pagoHS.equals("Pago por hora")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
         } else if (dia.equals("Dia") || totalHS.equals("Total de las horas") || pagoHS.equals("Pago por hora")) {
             JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
         } else {
-            totalH = Integer.parseInt(jTFHoras.getText());
-            pagoH = Float.parseFloat(jTFPagoH.getText());
-            total = totalH * pagoH;
-            
-            jTFDia.setText("Dia");
-            jTFHoras.setText("Total de las horas");
-            jTFPagoH.setText("Pago por hora");
-            
-            JOptionPane.showMessageDialog(null, "Datos ingresados");
-            moHorarioT.addRow(new Object[]{dia, totalH, pagoH, total});
-            jTTrabajadorT.repaint(); //Actualizar tabla visualmente
-
-            // Declarar la variable costoT fuera del ActionListener
-            float costoT = 0.00f;
-
-            // Obtener el número de filas en el JTable
-            int totalFilas = jTTrabajadorT.getRowCount();
-
-            // Recorrer cada fila del JTable
-            for (int i = 0; i < totalFilas; i++) {
-                // Obtener el valor total de la columna 3 (índice 2) en cada fila
-                float valorTotal = Float.parseFloat(jTTrabajadorT.getValueAt(i, 3).toString());
-                // Acumular el valor total en la variable costoT
-                costoT += valorTotal;
+            try {
+                con = connect.getConnection();
+                st = con.createStatement();
+                st.execute(iniciarT);
+                st.executeUpdate(queryInsert);
+                JOptionPane.showMessageDialog(null, "Registro agregado");
+                con.commit();
+                
+                limpiarTabla();
+                limpiarjTFieldHorario();
+                consultaEmpleado();
+                consultaInicial();
+                consultaCostoT();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
+                if(con != null){
+                    try {
+                        JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                        con.rollback();
+                        limpiarjTFieldEmpleado();
+                    } catch (SQLException ex) {
+                        System.out.println("Error: "+ex);
+                    }
+                }
+            } finally {
+                try {
+                    if (st != null && con != null) {
+                        con.setAutoCommit(true);
+                        st.close();
+                        con.close();
+                    }   
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar "+e);
+                }
             }
-
-            // Establecer el valor acumulado en el JLabel
-            jLCostoT.setText(String.valueOf(costoT));
         }
     }//GEN-LAST:event_jBAgregarMaterialesActionPerformed
 
@@ -613,10 +794,45 @@ public class JPTrabajador extends javax.swing.JPanel {
     }//GEN-LAST:event_jTFNumeroPMousePressed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        jLNEmpleado.setText("");
-        jLNomina.setText("");
-        jLFecha.setText("");
-        jLNumeroP.setText("");
+        String sqlDeleteH = "DELETE FROM horario";
+        String sqlDeleteE = "DELETE FROM Empleado";
+        try {
+            con = connect.getConnection();
+            st = con.createStatement();
+            st.execute(iniciarT);
+            st.execute(sqlDeleteH);
+            st.execute(sqlDeleteE);
+            JOptionPane.showMessageDialog(null, "Registros Eliminados");
+            con.commit();
+            
+            limpiarjLAbelEmpleado();
+            limpiarTabla();
+            limpiarjTFieldHorario();
+            limpiarjTFieldEmpleado();
+            consultaEmpleado();
+            consultaInicial();
+            consultaCostoT();
+        } catch (Exception e) {
+            System.out.println("El error fue: " + e);
+            if (con != null) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+        } finally {
+            try {
+                if (st != null && con != null) {
+                    con.setAutoCommit(true);
+                    st.close();
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar " + e);
+            }
+        }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jTFDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDiaMousePressed
@@ -658,11 +874,83 @@ public class JPTrabajador extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTFPagoHMousePressed
 
+    private void jBLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBLimpiarMouseEntered
+        jBLimpiar.setBackground(new Color(30,75,203));
+    }//GEN-LAST:event_jBLimpiarMouseEntered
+
+    private void jBLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBLimpiarMouseExited
+        jBLimpiar.setBackground(new Color(61,103,221));
+    }//GEN-LAST:event_jBLimpiarMouseExited
+
+    private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
+        this.limpiarTabla();
+        limpiarjTFieldEmpleado();
+        this.limpiarjTFieldHorario();
+        this.consultaInicial();
+    }//GEN-LAST:event_jBLimpiarActionPerformed
+
+    private void jBEliminarRegistroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarRegistroMouseEntered
+        jBEliminarRegistro.setBackground(new Color(182,45,41));
+    }//GEN-LAST:event_jBEliminarRegistroMouseEntered
+
+    private void jBEliminarRegistroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBEliminarRegistroMouseExited
+        jBEliminarRegistro.setBackground(new Color(221,66,62));
+    }//GEN-LAST:event_jBEliminarRegistroMouseExited
+
+    private void jBEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarRegistroActionPerformed
+        int fila = this.jTTrabajadorT.getSelectedRow();
+        String dia = this.jTTrabajadorT.getValueAt(fila, 0).toString();
+        int horasT = Integer.parseInt(this.jTTrabajadorT.getValueAt(fila, 1).toString());
+        String sql = "DELETE FROM horario WHERE dia = '" +dia+ "' AND horasT = "+horasT;
+        try {
+            con = connect.getConnection();
+            st = con.createStatement();
+            st.execute(iniciarT);
+            st.execute(sql);
+            JOptionPane.showMessageDialog(null, "Registro Eliminado");
+            con.commit();
+                        
+            limpiarjTFieldEmpleado();
+            limpiarTabla();
+            consultaInicial();
+            consultaCostoT();
+        } catch (Exception e) {
+            System.out.println("El error fue: " + e);
+            if (con != null) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+        } finally {
+            try {
+                if (st != null && con != null) {
+                    con.setAutoCommit(true);
+                    st.close();
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar " + e);
+            }
+        }
+    }//GEN-LAST:event_jBEliminarRegistroActionPerformed
+
+    private void jTTrabajadorTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTTrabajadorTMouseClicked
+        int fila = this.jTTrabajadorT.getSelectedRow();
+        this.jTFDia.setText(this.jTTrabajadorT.getValueAt(fila, 0).toString());
+        this.jTFHoras.setText(this.jTTrabajadorT.getValueAt(fila, 1).toString());
+        this.jTFPagoH.setText(this.jTTrabajadorT.getValueAt(fila, 2).toString());
+    }//GEN-LAST:event_jTTrabajadorTMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAgregarInfo;
     private javax.swing.JButton jBAgregarMateriales;
     private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBEliminarRegistro;
+    private javax.swing.JButton jBLimpiar;
     private javax.swing.JLabel jLCostoT;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLNEmpleado;
