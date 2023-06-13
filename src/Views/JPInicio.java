@@ -28,7 +28,6 @@ public class JPInicio extends javax.swing.JPanel {
 
         jPBackground = new javax.swing.JPanel();
         jLJava = new javax.swing.JLabel();
-        jLDeveloper = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -37,49 +36,50 @@ public class JPInicio extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
-        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
+        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
         jPBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLJava.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLJava.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/java.png"))); // NOI18N
-        jPBackground.add(jLJava, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 350, 241, -1));
-
-        jLDeveloper.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLDeveloper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/developer_male.jpg"))); // NOI18N
-        jPBackground.add(jLDeveloper, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 464, 346));
+        jLJava.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logo normal.png"))); // NOI18N
+        jPBackground.add(jLJava, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 150, 320, 310));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
         jLabel1.setText("REQUERIMIENTOS");
-        jPBackground.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 174, -1, -1));
+        jPBackground.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setText("Diseñar un programa (no Excel) que determine el costo tota y el costo unitario");
-        jPBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 204, -1, -1));
+        jPBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("aplicando el sistema de costos por órdenes específicas, mediante el llenado");
-        jPBackground.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 227, 478, -1));
+        jPBackground.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 478, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setText("previo de los siguientes formatos:");
-        jPBackground.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 250, -1, -1));
+        jPBackground.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel5.setText("-> Requisición de materiales");
-        jPBackground.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 285, -1, -1));
+        jPBackground.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel6.setText("-> Tarjeta de tiempo de trabajadores");
-        jPBackground.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 308, -1, -1));
+        jPBackground.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel7.setText("-> Determinación de tasa predeterminada de GIF");
-        jPBackground.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 331, -1, -1));
+        jPBackground.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel8.setText("-> Hoja de costos");
-        jPBackground.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 354, -1, -1));
+        jPBackground.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
+        jLabel9.setText("BIENVENIDO A SISTEMA COFFEE");
+        jPBackground.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -95,7 +95,6 @@ public class JPInicio extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLDeveloper;
     private javax.swing.JLabel jLJava;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -105,6 +104,7 @@ public class JPInicio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPBackground;
     // End of variables declaration//GEN-END:variables
 }

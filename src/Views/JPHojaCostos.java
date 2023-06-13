@@ -101,10 +101,14 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jLCosto4 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
 
+        setBackground(new java.awt.Color(246, 246, 246));
+
+        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
+
         jSeparator1.setForeground(new java.awt.Color(175, 175, 175));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTextField1.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField1.setBackground(new java.awt.Color(246, 246, 246));
         jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField1.setText("Cliente");
         jTextField1.setBorder(null);
@@ -114,26 +118,28 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel1.setText("Información");
 
-        jTextField2.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField2.setBackground(new java.awt.Color(246, 246, 246));
         jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField2.setText("N° orden");
         jTextField2.setBorder(null);
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField3.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField3.setBackground(new java.awt.Color(246, 246, 246));
         jTextField3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField3.setText("Descripcion");
         jTextField3.setBorder(null);
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField4.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField4.setBackground(new java.awt.Color(246, 246, 246));
         jTextField4.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField4.setText("Cantidad");
         jTextField4.setBorder(null);
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+
+        jPanel2.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel3.setText("Cliente:");
@@ -264,19 +270,21 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jBAgregarInfo.setBorderPainted(false);
         jBAgregarInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jTextField8.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField8.setBackground(new java.awt.Color(246, 246, 246));
         jTextField8.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField8.setText("Fecha inicio");
         jTextField8.setBorder(null);
 
         jSeparator10.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField9.setBackground(new java.awt.Color(242, 242, 242));
+        jTextField9.setBackground(new java.awt.Color(246, 246, 246));
         jTextField9.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField9.setText("Fecha termino");
         jTextField9.setBorder(null);
 
         jSeparator11.setForeground(new java.awt.Color(0, 0, 0));
+
+        jPanel1.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel2.setText("MOD");
@@ -364,6 +372,8 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(246, 246, 246));
+
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel7.setText("Materiales");
 
@@ -436,6 +446,8 @@ public class JPHojaCostos extends javax.swing.JPanel {
                     .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
+
+        jPanel4.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel17.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel17.setText("GIF");
@@ -521,6 +533,8 @@ public class JPHojaCostos extends javax.swing.JPanel {
                     .addComponent(jSeparator14, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
+
+        jPanel5.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel22.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel22.setText("Resumen");

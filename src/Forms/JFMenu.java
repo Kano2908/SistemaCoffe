@@ -6,23 +6,23 @@ package Forms;
 
 import Views.JPHojaCostos;
 import Views.JPInicio;
-import Views.JPRequisicion;
+import Views.JPRequisicionM;
 import Views.JPTasaGIF;
 import Views.JPTrabajador;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author crist
  */
 public class JFMenu extends javax.swing.JFrame {
-
+    int xMouse, yMouse; //Variables para mover la barra
     /**
-     * Creates new form JFMenu
+     * Creates new form JFMenuu
      */
     public JFMenu() {
         initComponents();
@@ -31,14 +31,15 @@ public class JFMenu extends javax.swing.JFrame {
     
     private void initContent(){
         JPInicio vinicio = new JPInicio();
-        vinicio.setSize(1012, 590);
-        vinicio.setLocation(0,0);
-        
-        jPViews.removeAll();
-        jPViews.add(vinicio, BorderLayout.CENTER);
-        jPViews.revalidate();
-        jPViews.repaint();
+            vinicio.setSize(1012, 543);
+            vinicio.setLocation(0, 0);
+
+            jPViews.removeAll();
+            jPViews.add(vinicio, BorderLayout.CENTER);
+            jPViews.revalidate();
+            jPViews.repaint();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,161 +49,252 @@ public class JFMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPBackground = new javax.swing.JPanel();
+        jPBarra = new javax.swing.JPanel();
+        jPExit = new javax.swing.JPanel();
+        jLExit = new javax.swing.JLabel();
         jPMenu = new javax.swing.JPanel();
-        jBRequisicionM = new javax.swing.JButton();
-        jBTiempoT = new javax.swing.JButton();
-        jBTasaGIF = new javax.swing.JButton();
-        jBHojaC = new javax.swing.JButton();
-        jBSalir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLRequisicionM = new javax.swing.JLabel();
+        jLHojaT = new javax.swing.JLabel();
+        jLTasaGIF = new javax.swing.JLabel();
+        jLHojaC = new javax.swing.JLabel();
         jPViews = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
 
-        jPMenu.setBackground(new java.awt.Color(236, 236, 236));
+        jPBackground.setBackground(new java.awt.Color(243, 242, 242));
 
-        jBRequisicionM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/RequisicionM.png"))); // NOI18N
-        jBRequisicionM.setToolTipText("Requisición de materiales");
-        jBRequisicionM.setBorderPainted(false);
-        jBRequisicionM.setContentAreaFilled(false);
-        jBRequisicionM.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jBRequisicionM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBRequisicionMActionPerformed(evt);
+        jPBarra.setBackground(new java.awt.Color(243, 242, 242));
+        jPBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPBarraMouseDragged(evt);
+            }
+        });
+        jPBarra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPBarraMousePressed(evt);
             }
         });
 
-        jBTiempoT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/TiempoT.png"))); // NOI18N
-        jBTiempoT.setToolTipText("Hoja de tiempo de los trabajadores");
-        jBTiempoT.setBorderPainted(false);
-        jBTiempoT.setContentAreaFilled(false);
-        jBTiempoT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jBTiempoT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTiempoTActionPerformed(evt);
+        jPExit.setBackground(new java.awt.Color(243, 242, 242));
+
+        jLExit.setBackground(new java.awt.Color(236, 236, 236));
+        jLExit.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLExit.setText("X");
+        jLExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLExitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLExitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLExitMouseExited(evt);
             }
         });
 
-        jBTasaGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/TazaGIF.png"))); // NOI18N
-        jBTasaGIF.setToolTipText("Calculo de tasa GIF");
-        jBTasaGIF.setBorderPainted(false);
-        jBTasaGIF.setContentAreaFilled(false);
-        jBTasaGIF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jBTasaGIF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBTasaGIFActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPExitLayout = new javax.swing.GroupLayout(jPExit);
+        jPExit.setLayout(jPExitLayout);
+        jPExitLayout.setHorizontalGroup(
+            jPExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+        );
+        jPExitLayout.setVerticalGroup(
+            jPExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLExit, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+        );
 
-        jBHojaC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/HojaC.png"))); // NOI18N
-        jBHojaC.setToolTipText("Hoja de costos");
-        jBHojaC.setBorderPainted(false);
-        jBHojaC.setContentAreaFilled(false);
-        jBHojaC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jBHojaC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBHojaCActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPBarraLayout = new javax.swing.GroupLayout(jPBarra);
+        jPBarra.setLayout(jPBarraLayout);
+        jPBarraLayout.setHorizontalGroup(
+            jPBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBarraLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPBarraLayout.setVerticalGroup(
+            jPBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-        jBSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Salir.png"))); // NOI18N
-        jBSalir.setToolTipText("Salir del sistema");
-        jBSalir.setBorderPainted(false);
-        jBSalir.setContentAreaFilled(false);
-        jBSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jBSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSalirActionPerformed(evt);
-            }
-        });
+        jPMenu.setBackground(new java.awt.Color(243, 242, 242));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logo.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("COFFEE");
+        jLRequisicionM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLRequisicionM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/RequisicionM.png"))); // NOI18N
+        jLRequisicionM.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLRequisicionM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLRequisicionMMouseClicked(evt);
+            }
+        });
+
+        jLHojaT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLHojaT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/TiempoT.png"))); // NOI18N
+        jLHojaT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLHojaT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLHojaTMouseClicked(evt);
+            }
+        });
+
+        jLTasaGIF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLTasaGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/TazaGIF.png"))); // NOI18N
+        jLTasaGIF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLTasaGIF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLTasaGIFMouseClicked(evt);
+            }
+        });
+
+        jLHojaC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLHojaC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/HojaC.png"))); // NOI18N
+        jLHojaC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLHojaC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLHojaCMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPMenuLayout = new javax.swing.GroupLayout(jPMenu);
         jPMenu.setLayout(jPMenuLayout);
         jPMenuLayout.setHorizontalGroup(
             jPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBRequisicionM, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBTiempoT, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBTasaGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBHojaC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLRequisicionM, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLHojaT, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLTasaGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLHojaC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPMenuLayout.setVerticalGroup(
             jPMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPMenuLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jBRequisicionM, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jBTiempoT, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jBTasaGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jBHojaC, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(jLRequisicionM, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLHojaT, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLTasaGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLHojaC, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(264, Short.MAX_VALUE))
         );
+
+        jPViews.setBackground(new java.awt.Color(246, 246, 246));
 
         javax.swing.GroupLayout jPViewsLayout = new javax.swing.GroupLayout(jPViews);
         jPViews.setLayout(jPViewsLayout);
         jPViewsLayout.setHorizontalGroup(
             jPViewsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1012, Short.MAX_VALUE)
+            .addGap(0, 1021, Short.MAX_VALUE)
         );
         jPViewsLayout.setVerticalGroup(
             jPViewsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 592, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
+        jPBackground.setLayout(jPBackgroundLayout);
+        jPBackgroundLayout.setHorizontalGroup(
+            jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPBarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                .addComponent(jPMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jPViews, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPBackgroundLayout.setVerticalGroup(
+            jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                .addComponent(jPBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPViews, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPViews, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPViews, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBRequisicionMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRequisicionMActionPerformed
-        JPRequisicion vRequisicion = new JPRequisicion();
-        vRequisicion.setSize(1012, 543);
-        vRequisicion.setLocation(0,0);
-        
-        jPViews.removeAll();
-        jPViews.add(vRequisicion, BorderLayout.CENTER);
-        jPViews.revalidate();
-        jPViews.repaint();
-    }//GEN-LAST:event_jBRequisicionMActionPerformed
+    private void jLExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLExitMouseClicked
+        JFLogin vLogin = new JFLogin();
+        vLogin.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLExitMouseClicked
 
-    private void jBTiempoTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTiempoTActionPerformed
+    private void jPBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPBarraMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse,y - yMouse);
+    }//GEN-LAST:event_jPBarraMouseDragged
+
+    private void jPBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPBarraMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_jPBarraMousePressed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        initContent();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLExitMouseEntered
+        jPExit.setBackground(Color.red);
+        jLExit.setForeground(Color.white);
+    }//GEN-LAST:event_jLExitMouseEntered
+
+    private void jLExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLExitMouseExited
+        Color customColor = new Color(243,242,242);
+        jPExit.setBackground(customColor);
+        jLExit.setForeground(Color.black);
+    }//GEN-LAST:event_jLExitMouseExited
+
+    private void jLRequisicionMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLRequisicionMMouseClicked
+        try {
+            JPRequisicionM vRequisicion = new JPRequisicionM();
+            vRequisicion.setSize(1012, 543);
+            vRequisicion.setLocation(0, 0);
+
+            jPViews.removeAll();
+            jPViews.add(vRequisicion, BorderLayout.CENTER);
+            jPViews.revalidate();
+            jPViews.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLRequisicionMMouseClicked
+
+    private void jLHojaTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLHojaTMouseClicked
         try {
             JPTrabajador vTiempoT = new JPTrabajador();
             vTiempoT.setSize(1012, 543);
             vTiempoT.setLocation(0,0);
-            
+
             jPViews.removeAll();
             jPViews.add(vTiempoT, BorderLayout.CENTER);
             jPViews.revalidate();
@@ -210,36 +302,29 @@ public class JFMenu extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(JFMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jBTiempoTActionPerformed
+    }//GEN-LAST:event_jLHojaTMouseClicked
 
-    private void jBTasaGIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTasaGIFActionPerformed
+    private void jLTasaGIFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLTasaGIFMouseClicked
         JPTasaGIF vTasaGIF = new JPTasaGIF();
         vTasaGIF.setSize(1012, 543);
         vTasaGIF.setLocation(0,0);
-        
+
         jPViews.removeAll();
         jPViews.add(vTasaGIF, BorderLayout.CENTER);
         jPViews.revalidate();
         jPViews.repaint();
-    }//GEN-LAST:event_jBTasaGIFActionPerformed
+    }//GEN-LAST:event_jLTasaGIFMouseClicked
 
-    private void jBHojaCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHojaCActionPerformed
+    private void jLHojaCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLHojaCMouseClicked
         JPHojaCostos vHojaC = new JPHojaCostos();
         vHojaC.setSize(1012, 590);
         vHojaC.setLocation(0,0);
-        
+
         jPViews.removeAll();
         jPViews.add(vHojaC, BorderLayout.CENTER);
         jPViews.revalidate();
         jPViews.repaint();
-    }//GEN-LAST:event_jBHojaCActionPerformed
-
-    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-        JFLogin vLogin = new JFLogin();
-        JOptionPane.showMessageDialog(null, "Hasta luego usuario");
-        vLogin.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jBSalirActionPerformed
+    }//GEN-LAST:event_jLHojaCMouseClicked
 
     /**
      * @param args the command line arguments
@@ -252,7 +337,7 @@ public class JFMenu extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -267,6 +352,7 @@ public class JFMenu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(JFMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -277,13 +363,15 @@ public class JFMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBHojaC;
-    private javax.swing.JButton jBRequisicionM;
-    private javax.swing.JButton jBSalir;
-    private javax.swing.JButton jBTasaGIF;
-    private javax.swing.JButton jBTiempoT;
+    private javax.swing.JLabel jLExit;
+    private javax.swing.JLabel jLHojaC;
+    private javax.swing.JLabel jLHojaT;
+    private javax.swing.JLabel jLRequisicionM;
+    private javax.swing.JLabel jLTasaGIF;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPBackground;
+    private javax.swing.JPanel jPBarra;
+    private javax.swing.JPanel jPExit;
     private javax.swing.JPanel jPMenu;
     private javax.swing.JPanel jPViews;
     // End of variables declaration//GEN-END:variables

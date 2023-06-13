@@ -42,11 +42,11 @@ public class JPTrabajador extends javax.swing.JPanel {
     private void limpiarjTFieldEmpleado() {
         jTFEmpleado.setText("Nombre del empleado");
         jTFNomina.setText("Nómina");
-        jTFFecha.setText("Fecha Mes/Dia/Año");
+        jTFFecha.setText("Fecha Año/Mes/Dia");
         jTFNumeroP.setText("N° periodo");
     }
     private void limpiarjTFieldHorario() {
-        jTFDia.setText("Dia");
+        jTFDia.setText("Dia Año/Mes/Dia");
         jTFHoras.setText("Total de las horas");
         jTFPagoH.setText("Pago por hora");
     }
@@ -158,10 +158,14 @@ public class JPTrabajador extends javax.swing.JPanel {
         jBLimpiar = new javax.swing.JButton();
         jBEliminarRegistro = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(246, 246, 246));
+
+        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
+
         jSeparator1.setForeground(new java.awt.Color(175, 175, 175));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTFEmpleado.setBackground(new java.awt.Color(242, 242, 242));
+        jTFEmpleado.setBackground(new java.awt.Color(246, 246, 246));
         jTFEmpleado.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFEmpleado.setText("Nombre del empleado");
         jTFEmpleado.setBorder(null);
@@ -176,7 +180,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel1.setText("Información");
 
-        jTFNomina.setBackground(new java.awt.Color(242, 242, 242));
+        jTFNomina.setBackground(new java.awt.Color(246, 246, 246));
         jTFNomina.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFNomina.setText("Nómina");
         jTFNomina.setBorder(null);
@@ -188,9 +192,9 @@ public class JPTrabajador extends javax.swing.JPanel {
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTFFecha.setBackground(new java.awt.Color(242, 242, 242));
+        jTFFecha.setBackground(new java.awt.Color(246, 246, 246));
         jTFFecha.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTFFecha.setText("Fecha Mes/Dia/Año");
+        jTFFecha.setText("Fecha Año/Mes/Dia");
         jTFFecha.setBorder(null);
         jTFFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -200,7 +204,7 @@ public class JPTrabajador extends javax.swing.JPanel {
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTFNumeroP.setBackground(new java.awt.Color(242, 242, 242));
+        jTFNumeroP.setBackground(new java.awt.Color(246, 246, 246));
         jTFNumeroP.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFNumeroP.setText("N° periodo");
         jTFNumeroP.setBorder(null);
@@ -215,19 +219,24 @@ public class JPTrabajador extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel2.setText("Horario del trabajador");
 
-        jTFDia.setBackground(new java.awt.Color(242, 242, 242));
+        jTFDia.setBackground(new java.awt.Color(246, 246, 246));
         jTFDia.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTFDia.setText("Dia");
+        jTFDia.setText("Dia Año/Mes/Dia");
         jTFDia.setBorder(null);
         jTFDia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTFDiaMousePressed(evt);
             }
         });
+        jTFDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFDiaActionPerformed(evt);
+            }
+        });
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTFHoras.setBackground(new java.awt.Color(242, 242, 242));
+        jTFHoras.setBackground(new java.awt.Color(246, 246, 246));
         jTFHoras.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFHoras.setText("Total de las horas");
         jTFHoras.setBorder(null);
@@ -239,7 +248,7 @@ public class JPTrabajador extends javax.swing.JPanel {
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTFPagoH.setBackground(new java.awt.Color(242, 242, 242));
+        jTFPagoH.setBackground(new java.awt.Color(246, 246, 246));
         jTFPagoH.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFPagoH.setText("Pago por hora");
         jTFPagoH.setBorder(null);
@@ -250,6 +259,8 @@ public class JPTrabajador extends javax.swing.JPanel {
         });
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
+
+        jPanel2.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel3.setText("Nombre del empleado");
@@ -314,12 +325,12 @@ public class JPTrabajador extends javax.swing.JPanel {
                             .addComponent(jLNEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                        .addComponent(jBEliminar)
-                        .addGap(22, 22, 22))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addComponent(jBEliminar)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,35 +483,31 @@ public class JPTrabajador extends javax.swing.JPanel {
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                                        .addComponent(jSeparator2))
-                                    .addComponent(jLabel1)
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFNomina)
-                                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFFecha)
-                                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFNumeroP)
-                                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel2)
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFDia)
-                                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTFHoras)
-                                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(93, 93, 93))
-                            .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTFPagoH, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                                .addComponent(jSeparator2))
+                            .addComponent(jLabel1)
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFNomina)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFFecha)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFNumeroP)
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2)
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFDia)
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTFHoras)
+                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jBAgregarMateriales, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFPagoH, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(93, 93, 93))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jBEliminarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -515,10 +522,10 @@ public class JPTrabajador extends javax.swing.JPanel {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLCostoT))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jBLimpiar))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPBackgroundLayout.setVerticalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,7 +584,7 @@ public class JPTrabajador extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -731,7 +738,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         }
 
         if (jTFFecha.getText().isEmpty()) {
-            jTFFecha.setText("Fecha Mes/Dia/Año");  
+            jTFFecha.setText("Fecha Año/Mes/Dia");  
         }
 
         if (jTFNumeroP.getText().isEmpty()) {
@@ -749,7 +756,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         }
         
         if (jTFFecha.getText().isEmpty()) {
-            jTFFecha.setText("Fecha Mes/Dia/Año");
+            jTFFecha.setText("Fecha Año/Mes/Dia");
         }
 
         if (jTFNumeroP.getText().isEmpty()) {
@@ -766,7 +773,7 @@ public class JPTrabajador extends javax.swing.JPanel {
             jTFNomina.setText("Nómina");
         }
 
-        if (jTFFecha.getText().equals("Fecha Mes/Dia/Año")) {
+        if (jTFFecha.getText().equals("Fecha Año/Mes/Dia")) {
             jTFFecha.setText("");
         }
 
@@ -785,7 +792,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         }
 
         if (jTFFecha.getText().isEmpty()) {
-            jTFFecha.setText("Fecha Mes/Dia/Año");
+            jTFFecha.setText("Fecha Año/Mes/Dia");
         }
 
         if (jTFNumeroP.getText().equals("N° periodo")) {
@@ -836,7 +843,7 @@ public class JPTrabajador extends javax.swing.JPanel {
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jTFDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDiaMousePressed
-        if (jTFDia.getText().equals("Dia")) {
+        if (jTFDia.getText().equals("Dia Año/Mes/Dia")) {
             jTFDia.setText("");
         }
         if (jTFHoras.getText().isEmpty()) {
@@ -850,7 +857,7 @@ public class JPTrabajador extends javax.swing.JPanel {
 
     private void jTFHorasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFHorasMousePressed
         if (jTFDia.getText().isEmpty()) {
-            jTFDia.setText("Dia");
+            jTFDia.setText("Dia Año/Mes/Dia");
         }
         if (jTFHoras.getText().equals("Total de las horas")) {
             jTFHoras.setText("");   
@@ -863,7 +870,7 @@ public class JPTrabajador extends javax.swing.JPanel {
 
     private void jTFPagoHMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFPagoHMousePressed
         if (jTFDia.getText().isEmpty()) {
-            jTFDia.setText("Dia");
+            jTFDia.setText("Dia Año/Mes/Dia");
         }
         if (jTFHoras.getText().isEmpty()) {
             jTFHoras.setText("Total de las horas");   
@@ -943,6 +950,10 @@ public class JPTrabajador extends javax.swing.JPanel {
         this.jTFHoras.setText(this.jTTrabajadorT.getValueAt(fila, 1).toString());
         this.jTFPagoH.setText(this.jTTrabajadorT.getValueAt(fila, 2).toString());
     }//GEN-LAST:event_jTTrabajadorTMouseClicked
+
+    private void jTFDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFDiaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
