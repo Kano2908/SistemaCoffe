@@ -4,18 +4,41 @@
  */
 package Views;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author crist
  */
 public class JPTasaGIF extends javax.swing.JPanel {
-
+    ConexionSQL connect = new ConexionSQL();
+    Connection con;
+    Statement st;
+    ResultSet rs;
     /**
      * Creates new form JPTasaGIF
      */
-    public JPTasaGIF() {
+    public JPTasaGIF() throws SQLException {
         initComponents();
+        consultaHorasTMOD();
     }
+    
+    private void consultaHorasTMOD() throws SQLException {
+        String queryTotalHMOD = "SELECT CONCAT('Total de horas: ', SUM(horasT)) AS horasTotal FROM horario";
+        con = connect.getConnection();
+        st = con.createStatement();
+        rs = st.executeQuery(queryTotalHMOD);
+        if (rs.next()) {
+            String costoTC = rs.getString("horasTotal");
+            jLTotalHMOD.setText(costoTC);
+        }
+
+        rs.close();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,34 +50,36 @@ public class JPTasaGIF extends javax.swing.JPanel {
     private void initComponents() {
 
         jPBackground = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jTFPresupuesto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextField2 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jBAgregarInfo = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLCostoT = new javax.swing.JLabel();
         jBEliminar = new javax.swing.JButton();
         jLFondo = new javax.swing.JLabel();
+        jLTotalHMOD = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jPBackground.setBackground(new java.awt.Color(255, 255, 255));
+        jPBackground.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField1.setText("Presupuesto");
-        jTextField1.setBorder(null);
+        jTFPresupuesto.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFPresupuesto.setText("Presupuesto");
+        jTFPresupuesto.setBorder(null);
+        jTFPresupuesto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFPresupuestoMousePressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Calculo para tasa GIF");
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField2.setText("Hotas de mano de obra");
-        jTextField2.setBorder(null);
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -78,6 +103,11 @@ public class JPTasaGIF extends javax.swing.JPanel {
 
         jLFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/fondotazagif.png"))); // NOI18N
+        jLFondo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLTotalHMOD.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLTotalHMOD.setText("Horas de MOD");
+        jLTotalHMOD.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
         jPBackground.setLayout(jPBackgroundLayout);
@@ -99,11 +129,11 @@ public class JPTasaGIF extends javax.swing.JPanel {
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLCostoT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jTextField1)
+                                    .addComponent(jTFPresupuesto)
                                     .addComponent(jSeparator2)
-                                    .addComponent(jTextField2)
                                     .addComponent(jSeparator3)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLTotalHMOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(173, 173, 173))))
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addGap(202, 202, 202)
@@ -119,12 +149,12 @@ public class JPTasaGIF extends javax.swing.JPanel {
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLTotalHMOD)
+                        .addGap(13, 13, 13)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,18 +180,24 @@ public class JPTasaGIF extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTFPresupuestoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFPresupuestoMousePressed
+        if(jTFPresupuesto.getText().equals("Presupuesto")){
+            jTFPresupuesto.setText("");
+        }
+    }//GEN-LAST:event_jTFPresupuestoMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAgregarInfo;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JLabel jLCostoT;
     private javax.swing.JLabel jLFondo;
+    private javax.swing.JLabel jLTotalHMOD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPBackground;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTFPresupuesto;
     // End of variables declaration//GEN-END:variables
 }

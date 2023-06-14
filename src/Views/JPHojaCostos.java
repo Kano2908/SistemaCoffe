@@ -163,6 +163,11 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jTFCliente.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFCliente.setText("Cliente");
         jTFCliente.setBorder(null);
+        jTFCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFClienteMousePressed(evt);
+            }
+        });
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -172,18 +177,33 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jTFNumeroO.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFNumeroO.setText("N° orden");
         jTFNumeroO.setBorder(null);
+        jTFNumeroO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFNumeroOMousePressed(evt);
+            }
+        });
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
         jTFDescripcion.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFDescripcion.setText("Descripcion");
         jTFDescripcion.setBorder(null);
+        jTFDescripcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFDescripcionMousePressed(evt);
+            }
+        });
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
         jTFCantidad.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTFCantidad.setText("Cantidad");
         jTFCantidad.setBorder(null);
+        jTFCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFCantidadMousePressed(evt);
+            }
+        });
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -320,9 +340,9 @@ public class JPHojaCostos extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLFechaI)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLFechaT)
-                            .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLFechaT))))
                 .addGap(0, 9, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -331,14 +351,24 @@ public class JPHojaCostos extends javax.swing.JPanel {
         );
 
         jTFFechaI.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTFFechaI.setText("Fecha inicio");
+        jTFFechaI.setText("Fecha inicio Año/Mes/Dia");
         jTFFechaI.setBorder(null);
+        jTFFechaI.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFFechaIMousePressed(evt);
+            }
+        });
 
         jSeparator10.setForeground(new java.awt.Color(0, 0, 0));
 
         jTFFechaT.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTFFechaT.setText("Fecha termino");
+        jTFFechaT.setText("Fecha termino Año/Mes/Dia");
         jTFFechaT.setBorder(null);
+        jTFFechaT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFFechaTMousePressed(evt);
+            }
+        });
 
         jSeparator11.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -795,11 +825,11 @@ public class JPHojaCostos extends javax.swing.JPanel {
         String fechaI = jTFFechaI.getText();
         String fechaT = jTFFechaT.getText();
         
-        String queryInsert = "INSERT INTO requisicion (id, nombre, numeroOrden, descripcion, cantidad, fechaInicio, fechaTermino) VALUES (1, "+numeroR+", '"+fecha+"', '"+departamento+"', "+numeroP+")";
+        String queryInsert = "INSERT INTO cliente (id, nombre, numeroOrden, descripcion, cantidad, fechaInicio, fechaTermino) VALUES (1, '"+nombre+"', "+numeroOrden+", '"+descripcion+"', "+cantidad+", '"+fechaI+"', '"+fechaT+"')";
         
-        if (numeroR.equals("Numero de requisición") && fecha.equals("Fecha Año/Mes/Dia") && departamento.equals("Departamento") && numeroP.equals("N° periodo")) {
+        if (nombre.equals("Cliente") && numeroOrden.equals("N° orden") && descripcion.equals("Descripcion") && cantidad.equals("Cantidad") && fechaI.equals("Fecha inicio Año/Mes/Dia") && fechaT.equals("Fecha termino Año/Mes/Dia")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
-        } else if (numeroR.equals("Numero de requisición") || fecha.equals("Fecha Año/Mes/Dia") || departamento.equals("Departamento") || numeroP.equals("N° periodo")) {
+        } else if (nombre.equals("Cliente") || numeroOrden.equals("N° orden") || descripcion.equals("Descripcion") || cantidad.equals("Cantidad") || fechaI.equals("Fecha inicio Año/Mes/Dia") || fechaT.equals("Fecha termino Año/Mes/Dia")) {
             JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
         } else {
             try {
@@ -810,21 +840,16 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Registro agregado");
                 con.commit();
                 
-                limpiarTabla();
-                limpiarjTFieldRequisicion();
-                consultaRequisicion();
-                consultaInicial();
-                consultaCostoT();
+                limpiarjTFieldCliente();
+                consultaCliente();
             } catch (SQLException e) {
                 System.out.println("Error: " + e);
                 if(con != null){
                     try {
                         JOptionPane.showMessageDialog(null, "Deshaciendo Cambios, usuarios maximos alcanzados");
                         con.rollback();
-                        limpiarjTFieldRequisicion();
-                        consultaRequisicion();
-                        consultaInicial();
-                        consultaCostoT();
+                        limpiarjTFieldCliente();
+                        consultaCliente();
                     } catch (SQLException ex) {
                         System.out.println("Error: "+ex);
                     }
@@ -882,6 +907,150 @@ public class JPHojaCostos extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jTFClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFClienteMousePressed
+        if (jTFCliente.getText().equals("Cliente")) {
+            jTFCliente.setText("");
+        }
+        if (jTFNumeroO.getText().isEmpty()) {
+            jTFNumeroO.setText("N° orden");   
+        }
+
+        if (jTFDescripcion.getText().isEmpty()) {
+            jTFDescripcion.setText("Descripcion");  
+        }
+
+        if (jTFCantidad.getText().isEmpty()) {
+            jTFCantidad.setText("Cantidad");  
+        }
+        if (jTFFechaI.getText().isEmpty()) {
+            jTFFechaI.setText("Fecha inicio Año/Mes/Dia");  
+        }
+
+        if (jTFFechaT.getText().isEmpty()) {
+            jTFFechaT.setText("Fecha termino Año/Mes/Dia");  
+        }
+    }//GEN-LAST:event_jTFClienteMousePressed
+
+    private void jTFNumeroOMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFNumeroOMousePressed
+        if (jTFCliente.getText().isEmpty()) {
+            jTFCliente.setText("Cliente");
+        }
+        if (jTFNumeroO.getText().equals("N° orden")) {
+            jTFNumeroO.setText("");   
+        }
+
+        if (jTFDescripcion.getText().isEmpty()) {
+            jTFDescripcion.setText("Descripcion");  
+        }
+
+        if (jTFCantidad.getText().isEmpty()) {
+            jTFCantidad.setText("Cantidad");  
+        }
+        if (jTFFechaI.getText().isEmpty()) {
+            jTFFechaI.setText("Fecha inicio Año/Mes/Dia");  
+        }
+
+        if (jTFFechaT.getText().isEmpty()) {
+            jTFFechaT.setText("Fecha termino Año/Mes/Dia");  
+        }
+    }//GEN-LAST:event_jTFNumeroOMousePressed
+
+    private void jTFDescripcionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDescripcionMousePressed
+        if (jTFCliente.getText().isEmpty()) {
+            jTFCliente.setText("Cliente");
+        }
+        if (jTFNumeroO.getText().isEmpty()) {
+            jTFNumeroO.setText("N° orden");   
+        }
+
+        if (jTFDescripcion.getText().equals("Descripcion")) {
+            jTFDescripcion.setText("");  
+        }
+
+        if (jTFCantidad.getText().isEmpty()) {
+            jTFCantidad.setText("Cantidad");  
+        }
+        if (jTFFechaI.getText().isEmpty()) {
+            jTFFechaI.setText("Fecha inicio Año/Mes/Dia");  
+        }
+
+        if (jTFFechaT.getText().isEmpty()) {
+            jTFFechaT.setText("Fecha termino Año/Mes/Dia");  
+        }
+    }//GEN-LAST:event_jTFDescripcionMousePressed
+
+    private void jTFCantidadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFCantidadMousePressed
+        if (jTFCliente.getText().isEmpty()) {
+            jTFCliente.setText("Cliente");
+        }
+        if (jTFNumeroO.getText().isEmpty()) {
+            jTFNumeroO.setText("N° orden");   
+        }
+
+        if (jTFDescripcion.getText().isEmpty()) {
+            jTFDescripcion.setText("Descripcion");  
+        }
+
+        if (jTFCantidad.getText().equals("Cantidad")) {
+            jTFCantidad.setText("");  
+        }
+        if (jTFFechaI.getText().isEmpty()) {
+            jTFFechaI.setText("Fecha inicio Año/Mes/Dia");  
+        }
+
+        if (jTFFechaT.getText().isEmpty()) {
+            jTFFechaT.setText("Fecha termino Año/Mes/Dia");  
+        }
+    }//GEN-LAST:event_jTFCantidadMousePressed
+
+    private void jTFFechaIMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFFechaIMousePressed
+        if (jTFCliente.getText().isEmpty()) {
+            jTFCliente.setText("Cliente");
+        }
+        if (jTFNumeroO.getText().isEmpty()) {
+            jTFNumeroO.setText("N° orden");   
+        }
+
+        if (jTFDescripcion.getText().isEmpty()) {
+            jTFDescripcion.setText("Descripcion");  
+        }
+
+        if (jTFCantidad.getText().isEmpty()) {
+            jTFCantidad.setText("Cantidad");  
+        }
+        if (jTFFechaI.getText().equals("Fecha inicio Año/Mes/Dia")) {
+            jTFFechaI.setText("");  
+        }
+
+        if (jTFFechaT.getText().isEmpty()) {
+            jTFFechaT.setText("Fecha termino Año/Mes/Dia");  
+        }
+    }//GEN-LAST:event_jTFFechaIMousePressed
+
+    private void jTFFechaTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFFechaTMousePressed
+        if (jTFCliente.getText().isEmpty()) {
+            jTFCliente.setText("Cliente");
+        }
+        if (jTFNumeroO.getText().isEmpty()) {
+            jTFNumeroO.setText("N° orden");   
+        }
+
+        if (jTFDescripcion.getText().isEmpty()) {
+            jTFDescripcion.setText("Descripcion");  
+        }
+
+        if (jTFCantidad.getText().isEmpty()) {
+            jTFCantidad.setText("Cantidad");  
+        }
+        if (jTFFechaI.getText().isEmpty()) {
+            jTFFechaI.setText("Fecha inicio Año/Mes/Dia");  
+        }
+
+        if (jTFFechaT.getText().equals("Fecha termino Año/Mes/Dia")) {
+            jTFFechaT.setText("");  
+        }
+    }//GEN-LAST:event_jTFFechaTMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

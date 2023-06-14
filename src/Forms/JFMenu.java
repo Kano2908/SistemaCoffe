@@ -305,14 +305,19 @@ public class JFMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLHojaTMouseClicked
 
     private void jLTasaGIFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLTasaGIFMouseClicked
-        JPTasaGIF vTasaGIF = new JPTasaGIF();
-        vTasaGIF.setSize(1012, 543);
-        vTasaGIF.setLocation(0,0);
+        try {
+            JPTasaGIF vTasaGIF = new JPTasaGIF();
 
-        jPViews.removeAll();
-        jPViews.add(vTasaGIF, BorderLayout.CENTER);
-        jPViews.revalidate();
-        jPViews.repaint();
+            vTasaGIF.setSize(1012, 543);
+            vTasaGIF.setLocation(0, 0);
+
+            jPViews.removeAll();
+            jPViews.add(vTasaGIF, BorderLayout.CENTER);
+            jPViews.revalidate();
+            jPViews.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLTasaGIFMouseClicked
 
     private void jLHojaCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLHojaCMouseClicked
