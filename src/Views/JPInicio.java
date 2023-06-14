@@ -38,7 +38,7 @@ public class JPInicio extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
-        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
+        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
         jPBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLJava.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

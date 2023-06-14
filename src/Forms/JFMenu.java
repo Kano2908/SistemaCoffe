@@ -66,9 +66,9 @@ public class JFMenu extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPBackground.setBackground(new java.awt.Color(243, 242, 242));
+        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPBarra.setBackground(new java.awt.Color(243, 242, 242));
+        jPBarra.setBackground(new java.awt.Color(255, 255, 255));
         jPBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPBarraMouseDragged(evt);
@@ -80,7 +80,7 @@ public class JFMenu extends javax.swing.JFrame {
             }
         });
 
-        jPExit.setBackground(new java.awt.Color(243, 242, 242));
+        jPExit.setBackground(new java.awt.Color(255, 255, 255));
 
         jLExit.setBackground(new java.awt.Color(236, 236, 236));
         jLExit.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
@@ -123,7 +123,7 @@ public class JFMenu extends javax.swing.JFrame {
             .addComponent(jPExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPMenu.setBackground(new java.awt.Color(243, 242, 242));
+        jPMenu.setBackground(new java.awt.Color(246, 246, 246));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logo.png"))); // NOI18N
@@ -192,10 +192,10 @@ public class JFMenu extends javax.swing.JFrame {
                 .addComponent(jLTasaGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLHojaC, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
 
-        jPViews.setBackground(new java.awt.Color(246, 246, 246));
+        jPViews.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPViewsLayout = new javax.swing.GroupLayout(jPViews);
         jPViews.setLayout(jPViewsLayout);

@@ -40,9 +40,8 @@ public class JPTasaGIF extends javax.swing.JPanel {
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
+        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setBackground(new java.awt.Color(246, 246, 246));
         jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField1.setText("Presupuesto");
         jTextField1.setBorder(null);
@@ -53,7 +52,6 @@ public class JPTasaGIF extends javax.swing.JPanel {
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField2.setBackground(new java.awt.Color(246, 246, 246));
         jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jTextField2.setText("Hotas de mano de obra");
         jTextField2.setBorder(null);

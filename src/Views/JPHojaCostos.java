@@ -4,17 +4,69 @@
  */
 package Views;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author crist
  */
 public class JPHojaCostos extends javax.swing.JPanel {
-
+    ConexionSQL connect = new ConexionSQL();
+    Connection con;
+    Statement st;
+    ResultSet rs;
+    DefaultTableModel modeloMateriales;
+    String iniciarT = "BEGIN";
     /**
      * Creates new form JPRequisicion
      */
     public JPHojaCostos() {
         initComponents();
+    }
+    
+    private void consultaCliente() throws SQLException {
+        String queryEmpleado = "SELECT nombre, numeroOrden, descripcion, cantidad, fechaInicio, fechaTermino FROM cliente";
+        try (ResultSet rsEmpleado = st.executeQuery(queryEmpleado)) {
+            while (rsEmpleado.next()) {
+                String cliente = rsEmpleado.getString("nombre");
+                String numeroO = rsEmpleado.getString("numeroOrden");
+                String descripcion = rsEmpleado.getString("descripcion");
+                String cantidad = rsEmpleado.getString("cantidad");
+                String fechaI = rsEmpleado.getString("fechaInicio");
+                String fechaT = rsEmpleado.getString("fechaTermino");
+                
+                // Asignar los valores a los JLabels correspondientes
+                jLCliente.setText(cliente);
+                jLNumeroO.setText(numeroO);
+                jLDescripcion.setText(descripcion);
+                jLCantidad.setText(cantidad);
+                jLFechaI.setText(fechaI);
+                jLFechaT.setText(fechaT);
+            }
+        }
+    }
+    
+    private void limpiarjLAbelCliente(){
+        jLCliente.setText("");
+        jLNumeroO.setText("");
+        jLDescripcion.setText("");
+        jLCantidad.setText("");
+        jLFechaI.setText("");
+        jLFechaT.setText("");
+    }
+    
+    private void limpiarjTFieldCliente() {
+        jTFCliente.setText("Numero de requisición");
+        jTFNumeroO.setText("Fecha Año/Mes/Dia");
+        jTFDescripcion.setText("Departamento");
+        jTFCantidad.setText("N° periodo");
+        jTFFechaI.setText("Departamento");
+        jTFFechaT.setText("N° periodo");
     }
 
     /**
@@ -28,34 +80,34 @@ public class JPHojaCostos extends javax.swing.JPanel {
 
         jPBackground = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        jTFCliente = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTFNumeroO = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextField3 = new javax.swing.JTextField();
+        jTFDescripcion = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        jTextField4 = new javax.swing.JTextField();
+        jTFCantidad = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLNRequisicion = new javax.swing.JLabel();
-        jLFecha = new javax.swing.JLabel();
-        jLDepartamento = new javax.swing.JLabel();
-        jLNumeroP = new javax.swing.JLabel();
+        jLCliente = new javax.swing.JLabel();
+        jLNumeroO = new javax.swing.JLabel();
+        jLDescripcion = new javax.swing.JLabel();
+        jLCantidad = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
         jBEliminar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLNumeroP1 = new javax.swing.JLabel();
-        jLNumeroP2 = new javax.swing.JLabel();
+        jLFechaI = new javax.swing.JLabel();
+        jLFechaT = new javax.swing.JLabel();
         jBAgregarInfo = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        jTFFechaI = new javax.swing.JTextField();
         jSeparator10 = new javax.swing.JSeparator();
-        jTextField9 = new javax.swing.JTextField();
+        jTFFechaT = new javax.swing.JTextField();
         jSeparator11 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -103,43 +155,39 @@ public class JPHojaCostos extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(246, 246, 246));
 
-        jPBackground.setBackground(new java.awt.Color(246, 246, 246));
+        jPBackground.setBackground(new java.awt.Color(255, 255, 255));
 
         jSeparator1.setForeground(new java.awt.Color(175, 175, 175));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTextField1.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField1.setText("Cliente");
-        jTextField1.setBorder(null);
+        jTFCliente.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFCliente.setText("Cliente");
+        jTFCliente.setBorder(null);
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel1.setText("Información");
 
-        jTextField2.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField2.setText("N° orden");
-        jTextField2.setBorder(null);
+        jTFNumeroO.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFNumeroO.setText("N° orden");
+        jTFNumeroO.setBorder(null);
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField3.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField3.setText("Descripcion");
-        jTextField3.setBorder(null);
+        jTFDescripcion.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFDescripcion.setText("Descripcion");
+        jTFDescripcion.setBorder(null);
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField4.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField4.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField4.setText("Cantidad");
-        jTextField4.setBorder(null);
+        jTFCantidad.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFCantidad.setText("Cantidad");
+        jTFCantidad.setBorder(null);
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
 
-        jPanel2.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel3.setText("Cliente:");
@@ -153,17 +201,17 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel6.setText("Cantidad:");
 
-        jLNRequisicion.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNRequisicion.setText("Información");
+        jLCliente.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLCliente.setText("Información");
 
-        jLFecha.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLFecha.setText("Información");
+        jLNumeroO.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLNumeroO.setText("Información");
 
-        jLDepartamento.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLDepartamento.setText("Información");
+        jLDescripcion.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLDescripcion.setText("Información");
 
-        jLNumeroP.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNumeroP.setText("Información");
+        jLCantidad.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLCantidad.setText("Información");
 
         jSeparator9.setForeground(new java.awt.Color(51, 51, 51));
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -174,6 +222,11 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jBEliminar.setText("ELIMINAR");
         jBEliminar.setBorderPainted(false);
         jBEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel8.setText("Fecha inicio:");
@@ -181,11 +234,23 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel9.setText("Fecha termino:");
 
-        jLNumeroP1.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNumeroP1.setText("Información");
+        jLFechaI.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLFechaI.setText("Información");
 
-        jLNumeroP2.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLNumeroP2.setText("Información");
+        jLFechaT.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLFechaT.setText("Información");
+
+        jBAgregarInfo.setBackground(new java.awt.Color(12, 147, 81));
+        jBAgregarInfo.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
+        jBAgregarInfo.setForeground(new java.awt.Color(255, 255, 255));
+        jBAgregarInfo.setText("AGREGAR");
+        jBAgregarInfo.setBorderPainted(false);
+        jBAgregarInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAgregarInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarInfoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -205,18 +270,21 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLFechaT, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBEliminar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLNumeroP2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLNumeroP1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLNumeroP, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLNRequisicion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(jLFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLDepartamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jLNumeroO, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLDescripcion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBEliminar)))
+                        .addComponent(jBAgregarInfo)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -228,24 +296,21 @@ public class JPHojaCostos extends javax.swing.JPanel {
                         .addComponent(jLabel3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLNRequisicion)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLFecha))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLDepartamento)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLCliente)
+                            .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLNumeroO))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLDescripcion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jLNumeroP, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLCantidad, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -253,38 +318,31 @@ public class JPHojaCostos extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLNumeroP1)
+                        .addComponent(jLFechaI)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLNumeroP2)))
-                .addGap(0, 17, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLFechaT)
+                            .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 9, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator9)
                 .addContainerGap())
         );
 
-        jBAgregarInfo.setBackground(new java.awt.Color(12, 147, 81));
-        jBAgregarInfo.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jBAgregarInfo.setForeground(new java.awt.Color(255, 255, 255));
-        jBAgregarInfo.setText("+");
-        jBAgregarInfo.setBorderPainted(false);
-        jBAgregarInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jTextField8.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField8.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField8.setText("Fecha inicio");
-        jTextField8.setBorder(null);
+        jTFFechaI.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFFechaI.setText("Fecha inicio");
+        jTFFechaI.setBorder(null);
 
         jSeparator10.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField9.setBackground(new java.awt.Color(246, 246, 246));
-        jTextField9.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jTextField9.setText("Fecha termino");
-        jTextField9.setBorder(null);
+        jTFFechaT.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFFechaT.setText("Fecha termino");
+        jTFFechaT.setBorder(null);
 
         jSeparator11.setForeground(new java.awt.Color(0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel2.setText("MOD");
@@ -372,7 +430,7 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel7.setText("Materiales");
@@ -447,7 +505,7 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel17.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel17.setText("GIF");
@@ -534,7 +592,7 @@ public class JPHojaCostos extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel22.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         jLabel22.setText("Resumen");
@@ -628,33 +686,28 @@ public class JPHojaCostos extends javax.swing.JPanel {
         jPBackgroundLayout.setHorizontalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPBackgroundLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
                 .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                                .addComponent(jSeparator2))
-                            .addComponent(jLabel1)
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField2)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField3)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField4)
-                                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField8)
-                                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField9)
-                                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addGap(327, 327, 327)
-                        .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                        .addComponent(jSeparator2))
+                    .addComponent(jLabel1)
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFNumeroO)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFDescripcion)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFCantidad)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFFechaI)
+                        .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTFFechaT)
+                        .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -678,31 +731,29 @@ public class JPHojaCostos extends javax.swing.JPanel {
                         .addGap(39, 39, 39)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFNumeroO, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFFechaT, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -721,7 +772,7 @@ public class JPHojaCostos extends javax.swing.JPanel {
                                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -736,17 +787,114 @@ public class JPHojaCostos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBAgregarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarInfoActionPerformed
+        String nombre = jTFCliente.getText();
+        String numeroOrden = jTFNumeroO.getText();
+        String descripcion = jTFDescripcion.getText();
+        String cantidad = jTFCantidad.getText();
+        String fechaI = jTFFechaI.getText();
+        String fechaT = jTFFechaT.getText();
+        
+        String queryInsert = "INSERT INTO requisicion (id, nombre, numeroOrden, descripcion, cantidad, fechaInicio, fechaTermino) VALUES (1, "+numeroR+", '"+fecha+"', '"+departamento+"', "+numeroP+")";
+        
+        if (numeroR.equals("Numero de requisición") && fecha.equals("Fecha Año/Mes/Dia") && departamento.equals("Departamento") && numeroP.equals("N° periodo")) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");
+        } else if (numeroR.equals("Numero de requisición") || fecha.equals("Fecha Año/Mes/Dia") || departamento.equals("Departamento") || numeroP.equals("N° periodo")) {
+            JOptionPane.showMessageDialog(null, "Ingrese los datos faltantes, por favor");
+        } else {
+            try {
+                con = connect.getConnection();
+                st = con.createStatement();
+                st.execute(iniciarT);
+                st.executeUpdate(queryInsert);
+                JOptionPane.showMessageDialog(null, "Registro agregado");
+                con.commit();
+                
+                limpiarTabla();
+                limpiarjTFieldRequisicion();
+                consultaRequisicion();
+                consultaInicial();
+                consultaCostoT();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
+                if(con != null){
+                    try {
+                        JOptionPane.showMessageDialog(null, "Deshaciendo Cambios, usuarios maximos alcanzados");
+                        con.rollback();
+                        limpiarjTFieldRequisicion();
+                        consultaRequisicion();
+                        consultaInicial();
+                        consultaCostoT();
+                    } catch (SQLException ex) {
+                        System.out.println("Error: "+ex);
+                    }
+                }
+            } finally {
+                try {
+                    if (st != null && con != null) {
+                        con.setAutoCommit(true);
+                        st.close();
+                        con.close();
+                    }   
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar "+e);
+                }
+            }
+        }
+    }//GEN-LAST:event_jBAgregarInfoActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        String sqlDeleteM = "DELETE FROM cliente";
+
+        try {
+            con = connect.getConnection();
+            st = con.createStatement();
+            st.execute(iniciarT);
+            st.execute(sqlDeleteM);
+            JOptionPane.showMessageDialog(null, "Registro Eliminado");
+            con.commit();
+            
+            limpiarjLAbelCliente();
+            //limpiarTabla();
+            limpiarjTFieldCliente();
+            //limpiarjTFieldRequisicion();
+            consultaCliente();
+            //consultaCostoT();
+        } catch (Exception e) {
+            System.out.println("El error fue: " + e);
+            if (con != null) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+        } finally {
+            try {
+                if (st != null && con != null) {
+                    con.setAutoCommit(true);
+                    st.close();
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar " + e);
+            }
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAgregarInfo;
     private javax.swing.JButton jBEliminar;
+    private javax.swing.JLabel jLCantidad;
+    private javax.swing.JLabel jLCliente;
     private javax.swing.JLabel jLCosto;
     private javax.swing.JLabel jLCosto1;
     private javax.swing.JLabel jLCosto2;
     private javax.swing.JLabel jLCosto3;
     private javax.swing.JLabel jLCosto4;
-    private javax.swing.JLabel jLDepartamento;
-    private javax.swing.JLabel jLFecha;
+    private javax.swing.JLabel jLDescripcion;
     private javax.swing.JLabel jLFecha1;
     private javax.swing.JLabel jLFecha2;
     private javax.swing.JLabel jLFecha3;
@@ -754,13 +902,12 @@ public class JPHojaCostos extends javax.swing.JPanel {
     private javax.swing.JLabel jLFecha5;
     private javax.swing.JLabel jLFecha6;
     private javax.swing.JLabel jLFecha7;
-    private javax.swing.JLabel jLNRequisicion;
+    private javax.swing.JLabel jLFechaI;
+    private javax.swing.JLabel jLFechaT;
     private javax.swing.JLabel jLNRequisicion1;
     private javax.swing.JLabel jLNRequisicion2;
     private javax.swing.JLabel jLNRequisicion3;
-    private javax.swing.JLabel jLNumeroP;
-    private javax.swing.JLabel jLNumeroP1;
-    private javax.swing.JLabel jLNumeroP2;
+    private javax.swing.JLabel jLNumeroO;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -806,11 +953,11 @@ public class JPHojaCostos extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTFCantidad;
+    private javax.swing.JTextField jTFCliente;
+    private javax.swing.JTextField jTFDescripcion;
+    private javax.swing.JTextField jTFFechaI;
+    private javax.swing.JTextField jTFFechaT;
+    private javax.swing.JTextField jTFNumeroO;
     // End of variables declaration//GEN-END:variables
 }
