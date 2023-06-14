@@ -798,7 +798,7 @@ public class JPRequisicionM extends javax.swing.JPanel {
         String descripcion = jTFDescripcion.getText();
         String precioU = jTFPrecioU.getText();
         
-        String queryInsert = "INSERT INTO materiales (cantidad, descripcion, precioU, total, idRequisicion) VALUES ("+cantidad+", '"+descripcion+"', "+precioU+", NULL, 1)";
+        String queryInsert = "INSERT INTO materiales (cantidad, descripcion, precioU, idRequisicion) VALUES ("+cantidad+", '"+descripcion+"', "+precioU+", 1)";
         
         if (cantidad.equals("Cantidad") && descripcion.equals("Descripcion") && precioU.equals("Precio Unitario")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");

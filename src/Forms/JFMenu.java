@@ -4,6 +4,7 @@
  */
 package Forms;
 
+import Views.ConexionSQL;
 import Views.JPHojaCostos;
 import Views.JPInicio;
 import Views.JPRequisicionM;
@@ -11,9 +12,13 @@ import Views.JPTasaGIF;
 import Views.JPTrabajador;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +26,11 @@ import java.util.logging.Logger;
  */
 public class JFMenu extends javax.swing.JFrame {
     int xMouse, yMouse; //Variables para mover la barra
+    ConexionSQL connect = new ConexionSQL();
+    Connection con;
+    Statement st;
+    ResultSet rs;
+    String iniciarT = "BEGIN";
     /**
      * Creates new form JFMenuu
      */
@@ -243,9 +253,51 @@ public class JFMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLExitMouseClicked
-        JFLogin vLogin = new JFLogin();
-        vLogin.setVisible(true);
-        dispose();
+        String sqlDeleteHojaC = "DELETE FROM hojaC";
+        String sqlDeleteM = "DELETE FROM cliente";
+        String sqlDeleteTG = "DELETE FROM tasaGIF";
+        String sqlDeleteH = "DELETE FROM horario";
+        String sqlDeleteE = "DELETE FROM Empleado";
+        String sqlDeleteMateriales = "DELETE FROM materiales";
+        String sqlDeleteR = "DELETE FROM requisicion";
+
+        try {
+            con = connect.getConnection();
+            st = con.createStatement();
+            st.execute(iniciarT);
+            st.execute(sqlDeleteHojaC);
+            st.execute(sqlDeleteM);
+            st.execute(sqlDeleteTG);
+            st.execute(sqlDeleteH);
+            st.execute(sqlDeleteE);
+            st.execute(sqlDeleteMateriales);
+            st.execute(sqlDeleteR);
+            JOptionPane.showMessageDialog(null, "Saliendo");
+            con.commit();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+            if (con != null) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+        } finally {
+            try {
+                if (st != null && con != null) {
+                    con.setAutoCommit(true);
+                    st.close();
+                    con.close();
+                    JFLogin vLogin = new JFLogin();
+                    vLogin.setVisible(true);
+                    dispose();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar " + e);
+            }
+        }
     }//GEN-LAST:event_jLExitMouseClicked
 
     private void jPBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPBarraMouseDragged
@@ -269,8 +321,7 @@ public class JFMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLExitMouseEntered
 
     private void jLExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLExitMouseExited
-        Color customColor = new Color(243,242,242);
-        jPExit.setBackground(customColor);
+        jPExit.setBackground(Color.white);
         jLExit.setForeground(Color.black);
     }//GEN-LAST:event_jLExitMouseExited
 
@@ -321,14 +372,18 @@ public class JFMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLTasaGIFMouseClicked
 
     private void jLHojaCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLHojaCMouseClicked
-        JPHojaCostos vHojaC = new JPHojaCostos();
-        vHojaC.setSize(1012, 590);
-        vHojaC.setLocation(0,0);
+        try {
+            JPHojaCostos vHojaC = new JPHojaCostos();
+            vHojaC.setSize(1012, 590);
+            vHojaC.setLocation(0, 0);
 
-        jPViews.removeAll();
-        jPViews.add(vHojaC, BorderLayout.CENTER);
-        jPViews.revalidate();
-        jPViews.repaint();
+            jPViews.removeAll();
+            jPViews.add(vHojaC, BorderLayout.CENTER);
+            jPViews.revalidate();
+            jPViews.repaint();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLHojaCMouseClicked
 
     /**

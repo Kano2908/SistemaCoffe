@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class ConexionSQL {
     String bd = "sistemaCoffee";
     String url = "jdbc:mysql://localhost:3306/";
-    String user = "Kano";                           //Variables de tipo String que almacenaran datos para la conexion a la base
+    String user = "root";                           //Variables de tipo String que almacenaran datos para la conexion a la base
     String psw = "Royalzkano01";
     String driver = "com.mysql.cj.jdbc.Driver";
     

@@ -692,7 +692,7 @@ public class JPTrabajador extends javax.swing.JPanel {
         String totalHS = jTFHoras.getText();
         String pagoHS = jTFPagoH.getText();
         
-        String queryInsert = "INSERT INTO horario (dia, horasT, pagoH, total, idEmpleado) VALUES ('"+dia+"', "+totalHS+", "+pagoHS+", NULL, 1)";
+        String queryInsert = "INSERT INTO horario (dia, horasT, pagoH, idEmpleado) VALUES ('"+dia+"', "+totalHS+", "+pagoHS+", 1)";
         
         if (dia.equals("Dia") && totalHS.equals("Total de las horas") && pagoHS.equals("Pago por hora")) {
             JOptionPane.showMessageDialog(null, "Ingrese datos, porfavor");

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,25 +19,49 @@ public class JPTasaGIF extends javax.swing.JPanel {
     Connection con;
     Statement st;
     ResultSet rs;
+    String iniciarT = "BEGIN";
     /**
      * Creates new form JPTasaGIF
+     * @throws java.sql.SQLException
      */
     public JPTasaGIF() throws SQLException {
         initComponents();
-        consultaHorasTMOD();
+        consultaTasaGIF();
+        consultaCostoT();
     }
-    
-    private void consultaHorasTMOD() throws SQLException {
-        String queryTotalHMOD = "SELECT CONCAT('Total de horas: ', SUM(horasT)) AS horasTotal FROM horario";
+            
+    private void consultaTasaGIF() throws SQLException{
+        String queryMOD = "SELECT presupuesto, horasMOD FROM tasaGIF";
         con = connect.getConnection();
         st = con.createStatement();
-        rs = st.executeQuery(queryTotalHMOD);
-        if (rs.next()) {
-            String costoTC = rs.getString("horasTotal");
-            jLTotalHMOD.setText(costoTC);
+        rs = st.executeQuery(queryMOD);
+        try {
+            while (rs.next()) {
+                String presupuesto = rs.getString("presupuesto");
+                String horasMOD = rs.getString("horasMOD");
+
+                jLPresupuesto.setText(presupuesto);
+                jLTotalHMOD.setText(horasMOD);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+    }
+    
+    private void consultaCostoT() throws SQLException {
+        String queryTotalC = "SELECT ROUND((presupuesto / horasMOD), 2) AS CostoT FROM tasaGIF";
+        ResultSet rsTotalC = st.executeQuery(queryTotalC);
+
+        if (rsTotalC.next()) {
+            String costoTC = rsTotalC.getString("costoT");
+            jLCostoT.setText(costoTC);
         }
 
-        rs.close();
+        rsTotalC.close();
+    }
+    
+    private void limpiarjTFieldPresupuesto() {
+        jTFPresupuesto.setText("Presupuesto");
     }
 
 
@@ -59,6 +84,8 @@ public class JPTasaGIF extends javax.swing.JPanel {
         jLCostoT = new javax.swing.JLabel();
         jBEliminar = new javax.swing.JButton();
         jLFondo = new javax.swing.JLabel();
+        jLPresupuesto = new javax.swing.JLabel();
+        jTFHorasMOD = new javax.swing.JTextField();
         jLTotalHMOD = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -88,25 +115,47 @@ public class JPTasaGIF extends javax.swing.JPanel {
         jBAgregarInfo.setForeground(new java.awt.Color(255, 255, 255));
         jBAgregarInfo.setText("CALCULAR");
         jBAgregarInfo.setBorderPainted(false);
+        jBAgregarInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBAgregarInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarInfoActionPerformed(evt);
+            }
+        });
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel7.setText("Costo total:  $");
 
         jLCostoT.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLCostoT.setText("Información");
 
         jBEliminar.setBackground(new java.awt.Color(221, 66, 62));
         jBEliminar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jBEliminar.setForeground(new java.awt.Color(255, 255, 255));
         jBEliminar.setText("ELIMINAR");
         jBEliminar.setBorderPainted(false);
+        jBEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jLFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/fondotazagif.png"))); // NOI18N
         jLFondo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLPresupuesto.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jLPresupuesto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jTFHorasMOD.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        jTFHorasMOD.setText("Horas MOD");
+        jTFHorasMOD.setBorder(null);
+        jTFHorasMOD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFHorasMODMousePressed(evt);
+            }
+        });
+
         jLTotalHMOD.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        jLTotalHMOD.setText("Horas de MOD");
         jLTotalHMOD.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPBackgroundLayout = new javax.swing.GroupLayout(jPBackground);
@@ -114,47 +163,51 @@ public class JPTasaGIF extends javax.swing.JPanel {
         jPBackgroundLayout.setHorizontalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPBackgroundLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addComponent(jLFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
-                                .addComponent(jBAgregarInfo)
-                                .addGap(262, 262, 262))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
-                                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPBackgroundLayout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLCostoT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jTFPresupuesto)
-                                    .addComponent(jSeparator2)
-                                    .addComponent(jSeparator3)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLTotalHMOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(173, 173, 173))))
-                    .addGroup(jPBackgroundLayout.createSequentialGroup()
-                        .addGap(202, 202, 202)
+                        .addComponent(jTFHorasMOD, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLTotalHMOD, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPBackgroundLayout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLCostoT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(151, 151, 151))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPBackgroundLayout.createSequentialGroup()
+                                .addComponent(jTFPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator2)
+                            .addComponent(jSeparator3)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jBAgregarInfo)))
+                .addGap(173, 173, 173))
         );
         jPBackgroundLayout.setVerticalGroup(
             jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPBackgroundLayout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(117, 117, 117)
+                .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPBackgroundLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTFPresupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLPresupuesto))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLTotalHMOD)
-                        .addGap(13, 13, 13)
+                        .addGap(15, 15, 15)
+                        .addGroup(jPBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFHorasMOD, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLTotalHMOD))
+                        .addGap(9, 9, 9)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBAgregarInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,9 +216,8 @@ public class JPTasaGIF extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jLCostoT))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -184,7 +236,102 @@ public class JPTasaGIF extends javax.swing.JPanel {
         if(jTFPresupuesto.getText().equals("Presupuesto")){
             jTFPresupuesto.setText("");
         }
+        if(jTFHorasMOD.getText().isEmpty()){
+            jTFHorasMOD.setText("Horas MOD"); 
+        }
     }//GEN-LAST:event_jTFPresupuestoMousePressed
+
+    private void jBAgregarInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarInfoActionPerformed
+        String presupuesto = jTFPresupuesto.getText();
+        String horasMOD = jTFHorasMOD.getText();
+        
+        String queryInsert = "INSERT INTO tasaGIF (id, presupuesto, horasMOD) VALUES (1, "+presupuesto+", "+horasMOD+")";
+        if(presupuesto.equals("Presupuesto") && horasMOD.equals("Horas MOD")){
+            JOptionPane.showMessageDialog(null, "Ingrese el presupuesto para el calculo");
+        } else{
+            try {
+                con = connect.getConnection();
+                st = con.createStatement();
+                st.execute(iniciarT);
+                st.executeUpdate(queryInsert);
+                JOptionPane.showMessageDialog(null, "Registro agregado");
+                con.commit();
+                consultaTasaGIF();
+                consultaCostoT();
+                limpiarjTFieldPresupuesto();
+
+            } catch (SQLException e) {
+                System.out.println("Error: " + e);
+                if(con != null){
+                    try {
+                        JOptionPane.showMessageDialog(null, "Deshaciendo Cambios, usuarios maximos alcanzados");
+                        con.rollback();
+                        limpiarjTFieldPresupuesto();
+
+                    } catch (SQLException ex) {
+                        System.out.println("Error: "+ex);
+                    }
+                }
+            } finally {
+                try {
+                    if (st != null && con != null) {
+                        con.setAutoCommit(true);
+                        st.close();
+                        con.close();
+                    }   
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar "+e);
+                }
+            }
+        }
+    }//GEN-LAST:event_jBAgregarInfoActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        String sqlDeleteTG = "DELETE FROM tasaGIF";
+        try {
+            con = connect.getConnection();
+            st = con.createStatement();
+            st.execute(iniciarT);
+            st.execute(sqlDeleteTG);
+            JOptionPane.showMessageDialog(null, "Registros Eliminados");
+            con.commit();
+            
+            jLPresupuesto.setText("");
+            jLTotalHMOD.setText("");
+            jLCostoT.setText("");
+            consultaTasaGIF();
+            consultaCostoT();
+        } catch (Exception e) {
+            System.out.println("El error fue: " + e);
+            if (con != null) {
+                try {
+                    JOptionPane.showMessageDialog(null, "Deshaciendo Cambios");
+                    con.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+        } finally {
+            try {
+                if (st != null && con != null) {
+                    con.setAutoCommit(true);
+                    st.close();
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar " + e);
+            }
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jTFHorasMODMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFHorasMODMousePressed
+        if(jTFPresupuesto.getText().isEmpty()){
+            jTFPresupuesto.setText("Presupuesto");
+        }
+        if(jTFHorasMOD.getText().equals("Horas MOD")){
+            jTFHorasMOD.setText(""); 
+        }
+    }//GEN-LAST:event_jTFHorasMODMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -192,12 +339,14 @@ public class JPTasaGIF extends javax.swing.JPanel {
     private javax.swing.JButton jBEliminar;
     private javax.swing.JLabel jLCostoT;
     private javax.swing.JLabel jLFondo;
+    private javax.swing.JLabel jLPresupuesto;
     private javax.swing.JLabel jLTotalHMOD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPBackground;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField jTFHorasMOD;
     private javax.swing.JTextField jTFPresupuesto;
     // End of variables declaration//GEN-END:variables
 }
